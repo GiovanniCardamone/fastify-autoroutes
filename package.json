@@ -6,12 +6,16 @@
   "scripts": {
     "lint": "standard | snazzy",
     "test": "npm run lint && npm run typescript",
-    "publish": "npm run test && npm publish"
+    "coverage": "cross-env VALUE_FROM_ENV=pippo tap --cov --coverage-report=html test"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/GiovanniCardamone/fastify-autoroutes.git"
   },
+  "keywords": [
+    "fastify",
+    "fastify-plugin"
+  ],
   "author": "Giovanni Cardamone",
   "license": "MIT",
   "bugs": {
@@ -20,6 +24,8 @@
   "homepage": "https://github.com/GiovanniCardamone/fastify-autoroutes#readme",
   "devDependencies": {
     "fastify": "^3.1.1",
+    "snazzy": "^8.0.0",
+    "standard": "^14.3.4",
     "tap": "^14.10.8",
     "typescript": "^3.9.7"
   },
