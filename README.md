@@ -5,18 +5,63 @@
 
 Map directory structure to routes
 
+**[Full Documentation](https://giovannicardamone.github.io/fastify-autoroutes/)**
+
 ## Install
 
 `npm install --save fastify-autoroutes`
+
+## How it works
+
+Fastify-autoroutes will map the directory tree of filesystem to url.
+
+for example the file `<autoroutes-directory>/user/:userid/index.js` will handle the request to `<your-host>/user/{user id}`.
+
+you can use method `fastifyInstance.printRoutes()` to see all routes after fastify-autoroutes inject it.
 
 ## Usage
 
 ```js
 const fastify = require('fastify')
-const Boom = require('boom')
 
-fastify.register(require('fastify-autoroutes'), { directory: './<where you want to put automatic routes>' })
+fastify.register(require('fastify-autoroutes'), {
+  directory: './<autoroutes-directory>',
+})
 ```
+
+```js
+//file: `<autoroutes-directory>/index.js`
+//mapped to: `<your host>`
+
+export default (fastifyInstance) => {
+  get: {
+    // [optional] your resource on get
+    handler: (request, reply) => {
+      return 'hello index route'
+    }
+  },
+  post: {
+    // [optional] your resource on post
+  },
+  put: {
+    // [optional] your resource on put
+  },
+  delete: {
+    // [optional] your resource on delete
+  },
+  options: {
+    // [optional] your resource on options
+  },
+  head: {
+    // [optional] your resource on head
+  }
+}
+```
+
+## How to skip file using autoroutes
+
+- add . to start of file (example: `.user.js` || `.user.ts`)
+- or move file outside of `<autoroutes-directory>`
 
 ## License
 
