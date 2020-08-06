@@ -13,9 +13,15 @@ Map directory structure to routes
 
 ## How it works
 
-Fastify-autoroutes will map the directory tree of filesystem to url.
+Fastify-autoroutes will map the directory tree of filesystem to urls.
 
-for example the file `<autoroutes-directory>/user/:userid/index.js` will handle the request to `<your-host>/user/{user id}`.
+for example the file
+`<autoroutes-directory>/user/:userid/index.js` or `<autoroutes-directory>/user/:userid.js`
+
+will handle the request to
+`<your-host>/user/{user id}`.
+
+---
 
 you can use method `fastifyInstance.printRoutes()` to see all routes after fastify-autoroutes inject it.
 
