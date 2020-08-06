@@ -16,7 +16,8 @@ Map directory structure to routes
 Fastify-autoroutes will map the directory tree of filesystem to urls.
 
 for example the file
-`<autoroutes-directory>/user/:userid/index.js` or `<autoroutes-directory>/user/:userid.js`
+`<autoroutes-directory>/user/:userid/index.js`
+or `<autoroutes-directory>/user/:userid.js`
 
 will handle the request to
 `<your-host>/user/{user id}`.
