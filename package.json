@@ -1,36 +1,40 @@
 {
-  "name": "fastify-autoroutes",
-  "version": "0.0.1",
-  "description": "Map directory structure to routes",
-  "main": "index.js",
-  "scripts": {
-    "lint": "standard | snazzy",
-    "test": "npm run lint && npm run typescript",
-    "coverage": "cross-env VALUE_FROM_ENV=pippo tap --cov --coverage-report=html test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GiovanniCardamone/fastify-autoroutes.git"
-  },
-  "keywords": [
-    "fastify",
-    "fastify-plugin"
-  ],
-  "author": "Giovanni Cardamone",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/GiovanniCardamone/fastify-autoroutes/issues"
-  },
-  "homepage": "https://github.com/GiovanniCardamone/fastify-autoroutes#readme",
-  "devDependencies": {
-    "@types/node": "^14.0.27",
-    "fastify": "^3.1.1",
-    "snazzy": "^8.0.0",
-    "standard": "^14.3.4",
-    "tap": "^14.10.8",
-    "typescript": "^3.9.7"
-  },
-  "dependencies": {
-    "fastify-plugin": "^2.1.1"
-  }
+    "name": "fastify-autoroutes",
+    "version": "0.0.1",
+    "description": "Map directory structure to routes",
+    "main": "dist/index.js",
+    "scripts": {
+        "lint": "eslint ./src",
+        "build": "tsc",
+        "watch": "nodemon",
+        "clean": "rm -rf dist",
+        "test": "npm run lint && tap tests",
+        "coverage": "cross-env VALUE_FROM_ENV=pippo tap --cov --coverage-report=html test",
+        "deploy": "npm run lint && npm run build && npm run test && npm run coverage && npm publish"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/GiovanniCardamone/fastify-autoroutes.git"
+    },
+    "keywords": [
+        "fastify",
+        "fastify-plugin"
+    ],
+    "author": "Giovanni Cardamone",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/GiovanniCardamone/fastify-autoroutes/issues"
+    },
+    "homepage": "https://github.com/GiovanniCardamone/fastify-autoroutes#readme",
+    "devDependencies": {
+        "@types/node": "^14.0.27",
+        "eslint": "^7.6.0",
+        "fastify": "^3.1.1",
+        "nodemon": "^2.0.4",
+        "tap": "^14.10.8",
+        "typescript": "^3.9.7"
+    },
+    "dependencies": {
+        "fastify-plugin": "^2.1.1"
+    }
 }

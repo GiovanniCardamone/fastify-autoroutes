@@ -1,0 +1,12 @@
+.dependabot
+docs
+examples
+tests
+src
+tests
+.editorconfig
+.prettierignore
+.prettierrc
+.taprc
+eslint.json
+nodemon.json
