@@ -1,24 +1,14 @@
 # fastify-autoroutes
 
-![CI workflow](https://github.com/GiovanniCardamone/fastify-autoroutes/workflows/CI%20workflow/badge.svg)
-
-[![Known Vulnerabilities](https://snyk.io/test/github/GiovanniCardamone/fastify-autoroutes/badge.svg)](https://snyk.io/test/github/GiovanniCardamone/fastify-autoroutes)
-
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-gren.svg?style=flat)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
-
 Automatic add routes based on file system hierarchy
 
-**[Full Documentation](https://giovannicardamone.github.io/fastify-autoroutes/)**
-
-## :rocket: Install
+## Install
 
 ```sh
 npm install --save fastify-autoroutes
 ```
 
-## :blue_book: Usage
+## Usage
 
 ```js
 const fastify = require('fastify')
@@ -60,7 +50,7 @@ export default (fastifyInstance) => {
 }
 ```
 
-## :arrow_forward: Accepted Methods in Module
+## Accepted Methods in Module
 
 - delete
 - get
@@ -70,11 +60,11 @@ export default (fastifyInstance) => {
 - put
 - options
 
-## :arrow_forward: Url Parameters using path name
+## Url Parameters using path name
 
 to use url parameters in your route use `{parmName}` in your file or directory, it will be automatically changet to fastify parameter
 
-## :arrow_forward: Skip files in autoroutes directory
+## Skip files in autoroutes directory
 
 to skip file in routes directory, prepend the `.` or `_` charater to filename
 
@@ -89,32 +79,14 @@ examples:
 
 this is useful if you want to have a lib file containts functions that don't have to be a route, so just create the file with `_` prepending character
 
-## :arrows_clockwise: Changes
+## Examples
 
-Check [CHANGELOG](./CHANGELOG.md)
+- [Example javascript App](https://github.com/GiovanniCardamone/fastify-autoroutes/tree/master/examples/simple-js-app)
+- [Example typescript App](https://github.com/GiovanniCardamone/fastify-autoroutes/tree/master/examples/simple-ts-app)
 
-## :page_facing_up: License
+## Contribute
 
-Licensed under [MIT](./LICENSE)
+To contribute to [fastify-autoroutes](https://github.com/GiovanniCardamone/fastify-autoroutes) please check the [CONTRIBUTING](https://github.com/GiovanniCardamone/fastify-autoroutes/master/CONTRIBUTING.md) file.
 
-## :sparkles: Contributors
+All contributions are apprecciated :smiley:
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-If you want to contribute remember to comment on an issue or pull request with:
-@all-contributors please add @jakebolam for infrastructure, tests and code
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tr>
-    <td align="center"><a href="http://giovannicardamone.github.io"><img src="https://avatars0.githubusercontent.com/u/5117748?v=4" width="100px;" alt=""/><br /><sub><b>Giovanni Cardamone</b></sub></a><br /><a href="https://github.com/GiovanniCardamone/fastify-autoroutes/commits?author=GiovanniCardamone" title="Code">💻</a> <a href="https://github.com/GiovanniCardamone/fastify-autoroutes/commits?author=GiovanniCardamone" title="Documentation">📖</a> <a href="#example-GiovanniCardamone" title="Examples">💡</a> <a href="#maintenance-GiovanniCardamone" title="Maintenance">🚧</a></td>
-  </tr>
-</table>
-
-<!-- markdownlint-enable -->
-<!-- prettier-ignore-end -->
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
