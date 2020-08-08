@@ -25,7 +25,7 @@ const fastify = require('fastify')
 const server = fastify()
 
 server.register(require('fastify-autoroutes'), {
-  dir: './<autoroutes-directory>',
+  dir: './<autoroutes-directory>', // relative to your cwd
 })
 ```
 
@@ -40,6 +40,7 @@ export default (fastifyInstance) => {
       reply.send('hello index route')
     }
   },
+  // you can also use: ['delete', 'get', 'head', 'patch', 'post', 'put', 'options']
 }
 ```
 
@@ -59,7 +60,7 @@ export default (fastifyInstance) => {
 }
 ```
 
-## :arrow_forward: Accepted Methods
+## :arrow_forward: Accepted Methods in Module
 
 - delete
 - get
@@ -69,11 +70,11 @@ export default (fastifyInstance) => {
 - put
 - options
 
-## :arrow_forward: Url Parameters
+## :arrow_forward: Url Parameters using path name
 
 to use url parameters in your route use `{parmName}` in your file or directory, it will be automatically changet to fastify parameter
 
-## :arrow_forward: Skip files in autoroutes di
+## :arrow_forward: Skip files in autoroutes directory
 
 to skip file in routes directory, prepend the `.` or `_` charater to filename
 
@@ -85,6 +86,8 @@ examples:
 - `.skipped_file.ts`
 - `_also_skipped_file.js`
 - `_also_skipped_file.ts`
+
+this is useful if you want to have a lib file containts functions that don't have to be a route, so just create the file with `_` prepending character
 
 ## :arrows_clockwise: Changes
 
