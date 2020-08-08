@@ -1,9 +1,12 @@
 import fastify, { FastifyInstance } from 'fastify'
-
-import { Rest } from 'fastify-autoroutes'
+import { Resource } from '../../../dist'
 
 export default (fastify: FastifyInstance) => {
-  return <Rest>{
-    get: {},
+  return <Resource>{
+    get: {
+      handler: (request, reply) => {
+        reply.send('hello index')
+      },
+    },
   }
 }

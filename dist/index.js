@@ -18,6 +18,16 @@ var fastify_plugin_1 = __importDefault(require("fastify-plugin"));
 var process_1 = __importDefault(require("process"));
 var path_1 = __importDefault(require("path"));
 var fs_1 = __importDefault(require("fs"));
+var validMethods = [
+    'delete',
+    'get',
+    'head',
+    'patch',
+    'post',
+    'put',
+    'options',
+    'all',
+];
 function scan(fastify, baseDir, current) {
     var combined = path_1.default.join(baseDir, current);
     var combinedStat = fs_1.default.statSync(combined);
@@ -39,23 +49,27 @@ function isAcceptableFile(file, stat) {
         (stat.isFile() || stat.isSymbolicLink()));
 }
 function resourcePathOf(path) {
-    var url = path.replace('.ts', '').replace('.js', '').replace('index', '');
+    var url = '/' + path.replace('.ts', '').replace('.js', '').replace('index', '');
     return url.endsWith('/') && url.length > 1
         ? url.substring(0, url.length - 1)
         : url.length == 0
             ? '/'
             : url;
 }
-function autoload(fastify, fullPath, resourcePath) {
+function autoload(fastify, fullPath, url) {
     var module = loadModule(fullPath);
     if (typeof module !== 'function') {
         throw new Error("module " + fullPath + " must export default function");
     }
-    var routesMethods = module(fastify);
-    for (var _i = 0, _a = Object.entries(routesMethods); _i < _a.length; _i++) {
-        var _b = _a[_i], method = _b[0], route = _b[1];
-        console.info('adding', method, resourcePath, route);
-        fastify.route(__assign({ method: method.toUpperCase(), url: resourcePath }, route));
+    var routes = module(fastify);
+    for (var _i = 0, _a = Object.entries(routes); _i < _a.length; _i++) {
+        var _b = _a[_i], meth = _b[0], route = _b[1];
+        if (validMethods.includes(meth)) {
+            var method = meth.toUpperCase();
+            console.info('adding', method, url, route);
+            fastify.route(__assign({ url: url,
+                method: method }, route));
+        }
     }
 }
 function loadModule(path) {
@@ -80,6 +94,9 @@ exports.default = fastify_plugin_1.default(function (fastify, options, next) {
     catch (error) {
         console.error("[ERROR] fastify-autoload: " + error.message);
         return next(error);
+    }
+    finally {
+        return next();
     }
 }, {
     fastify: '>=3.0.0',

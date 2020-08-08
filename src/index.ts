@@ -4,6 +4,7 @@ import { FastifyInstance, RouteOptions } from 'fastify'
 import process from 'process'
 import path from 'path'
 import fs from 'fs'
+import { Interface } from 'readline'
 
 export type ValidMethods =
   | 'DELETE'
@@ -14,6 +15,17 @@ export type ValidMethods =
   | 'PUT'
   | 'OPTIONS'
 
+const validMethods = [
+  'delete',
+  'get',
+  'head',
+  'patch',
+  'post',
+  'put',
+  'options',
+  'all',
+]
+
 export type AnyRoute = Omit<RouteOptions, 'method' | 'url'>
 
 export type DeleteRoute = AnyRoute
@@ -23,6 +35,8 @@ export type PatchRoute = AnyRoute
 export type PostRoute = AnyRoute
 export type PutRoute = AnyRoute
 export type OptionsRoute = AnyRoute
+
+export type AllRoutes = AnyRoute
 
 export interface Resource {
   delete?: DeleteRoute
@@ -62,7 +76,8 @@ function isAcceptableFile(file: string, stat: fs.Stats): boolean {
 }
 
 function resourcePathOf(path: string) {
-  const url = path.replace('.ts', '').replace('.js', '').replace('index', '')
+  const url =
+    '/' + path.replace('.ts', '').replace('.js', '').replace('index', '')
 
   return url.endsWith('/') && url.length > 1
     ? url.substring(0, url.length - 1)
@@ -71,26 +86,26 @@ function resourcePathOf(path: string) {
     : url
 }
 
-function autoload(
-  fastify: FastifyInstance,
-  fullPath: string,
-  resourcePath: string
-) {
+function autoload(fastify: FastifyInstance, fullPath: string, url: string) {
   const module = loadModule(fullPath)
 
   if (typeof module !== 'function') {
     throw new Error(`module ${fullPath} must export default function`)
   }
 
-  const routesMethods = module(fastify)
+  const routes = module(fastify)
 
-  for (const [method, route] of Object.entries(routesMethods)) {
-    console.info('adding', method, resourcePath, route)
-    fastify.route({
-      method: method.toUpperCase() as ValidMethods,
-      url: resourcePath,
-      ...(route as AnyRoute),
-    })
+  for (const [meth, route] of Object.entries<AnyRoute>(routes)) {
+    if (validMethods.includes(meth)) {
+      const method: ValidMethods = meth.toUpperCase() as ValidMethods
+      console.info('adding', method, url, route)
+
+      fastify.route({
+        url,
+        method,
+        ...route,
+      })
+    }
   }
 }
 
@@ -119,6 +134,8 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
     } catch (error) {
       console.error(`[ERROR] fastify-autoload: ${error.message}`)
       return next(error)
+    } finally {
+      return next()
     }
   },
   {

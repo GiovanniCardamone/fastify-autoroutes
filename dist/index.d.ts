@@ -9,6 +9,7 @@ export declare type PatchRoute = AnyRoute;
 export declare type PostRoute = AnyRoute;
 export declare type PutRoute = AnyRoute;
 export declare type OptionsRoute = AnyRoute;
+export declare type AllRoutes = AnyRoute;
 export interface Resource {
     delete?: DeleteRoute;
     get?: GetRoute;
