@@ -1,10 +1,10 @@
 import fastify from 'fastify'
-import fastifyAutoroutes from '../../index'
+import fastifyAutoroutes from '../../dist/index'
 
 const server = fastify()
 
 server.register(fastifyAutoroutes, {
-  directory: './routes',
+  dir: './routes',
 })
 
 server.listen(9999)
