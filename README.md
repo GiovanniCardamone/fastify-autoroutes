@@ -32,7 +32,7 @@ you can use method `fastifyInstance.printRoutes()` to see all routes after fasti
 const fastify = require('fastify')
 
 fastify.register(require('fastify-autoroutes'), {
-  directory: './<autoroutes-directory>',
+  dir: './<autoroutes-directory>',
 })
 ```
 
