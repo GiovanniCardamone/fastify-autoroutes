@@ -12,13 +12,13 @@ Automatic add routes based on file system hierarchy
 
 **[Full Documentation](https://giovannicardamone.github.io/fastify-autoroutes/)**
 
-## Install
+## :rocket: Install
 
 ```sh
 npm install --save fastify-autoroutes
 ```
 
-## Usage
+## :blue_book: Usage
 
 ```js
 const fastify = require('fastify')
@@ -58,7 +58,7 @@ export default (fastifyInstance) => {
 }
 ```
 
-## Accepted methods
+## :arrow_forward: Accepted Methods
 
 - delete
 - get
@@ -68,24 +68,32 @@ export default (fastifyInstance) => {
 - put
 - options
 
-## url parameters
+## :arrow_forward: Url Parameters
 
 to use url parameters in your route use `{parmName}` in your file or directory, it will be automatically changet to fastify parameter
 
-## Skip files in autoroutes di
+## :arrow_forward: Skip files in autoroutes di
 
 to skip file in routes directory, prepend the `.` or `_` charater to filename
 
 examples:
 
-- `.skipped`
-- `_also_skipped`
+- `.skipped_directory`
+- `_also_skipped_directory`
+- `.skipped_file.js`
+- `.skipped_file.ts`
+- `_also_skipped_file.js`
+- `_also_skipped_file.ts`
 
-## License
+## :arrows_clockwise: Changes
+
+Check [CHANGELOG](./CHANGELOG.md)
+
+## :page_facing_up: License
 
 Licensed under [MIT](./LICENSE)
 
-## Contributors ✨
+## :sparkles: Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
