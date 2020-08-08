@@ -1,6 +1,6 @@
 {
     "name": "fastify-autoroutes",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Map directory structure to routes",
     "main": "dist/index.js",
     "scripts": {
