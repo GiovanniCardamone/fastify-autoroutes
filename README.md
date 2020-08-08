@@ -5,8 +5,7 @@
 [![GitHub forks](https://img.shields.io/github/forks/GiovanniCardamone/fastify-autoroutes.svg)](https://github.com/GiovanniCardamone/fastify-autoroutes/network)
 [![GitHub stars](https://img.shields.io/github/stars/GiovanniCardamone/fastify-autoroutes.svg)](https://github.com/GiovanniCardamone/fastify-autoroutes/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/GiovanniCardamone/fastify-autoroutes.svg)](https://github.com/GiovanniCardamone/fastify-autoroutes/issues) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-gren.svg?style=flat)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-gren.svg?style=flat)](#contributors-) <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![GitHub license](https://img.shields.io/github/license/GiovanniCardamone/fastify-autoroutes.svg)](https://github.com/GiovanniCardamone/fastify-autoroutes/blob/master/LICENSE)
 [![NPM downloads](https://img.shields.io/npm/dm/fastify-autoroutes.svg?style=flat)](https://www.npmjs.com/package/fastify-autoroutes)
 [![Known Vulnerabilities](https://snyk.io/test/github/GiovanniCardamone/fastify-autoroutes/badge.svg)](https://snyk.io/test/github/GiovanniCardamone/fastify-autoroutes)
