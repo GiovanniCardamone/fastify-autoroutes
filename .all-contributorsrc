@@ -1,4 +1,23 @@
 {
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "GiovanniCardamone",
+      "name": "Giovanni Cardamone",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5117748?v=4",
+      "profile": "http://giovannicardamone.github.io",
+      "contributions": [
+        "code",
+        "doc",
+        "example",
+        "maintenance"
+      ]
+    }
+  ],
   "projectName": "fastify-autoroutes",
   "projectOwner": "GiovanniCardamone",
   "repoType": "github",
