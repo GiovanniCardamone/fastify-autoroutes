@@ -5,8 +5,6 @@
 
 Automatic add routes based on file system hierarchy
 
-**[Full Documentation](https://giovannicardamone.github.io/fastify-autoroutes/)**
-
 ## Install
 
 ```sh
