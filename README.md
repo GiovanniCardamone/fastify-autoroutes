@@ -1,5 +1,7 @@
 # fastify-autoroutes
 
+![JavaScript](https://img.shields.io/badge/ES6-Supported-yellow.svg?style=for-the-badge&logo=JavaScript) &nbsp; ![TypeScript](https://img.shields.io/badge/TypeScript-Supported-blue.svg?style=for-the-badge)
+
 [![GitHub forks](https://img.shields.io/github/forks/GiovanniCardamone/fastify-autoroutes.svg)](https://github.com/GiovanniCardamone/fastify-autoroutes/network)
 [![GitHub stars](https://img.shields.io/github/stars/GiovanniCardamone/fastify-autoroutes.svg)](https://github.com/GiovanniCardamone/fastify-autoroutes/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/GiovanniCardamone/fastify-autoroutes.svg)](https://github.com/GiovanniCardamone/fastify-autoroutes/issues) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
