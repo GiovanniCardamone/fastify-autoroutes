@@ -2,8 +2,13 @@
   "files": [
     "README.md"
   ],
+  "projectName": "fastify-autoroutes",
+  "projectOwner": "GiovanniCardamone",
+  "repoType": "github",
+  "repoHost": "https://github.com",
   "imageSize": 100,
-  "commit": false,
+  "commit": true,
+  "commitConvention": "none",
   "contributors": [
     {
       "login": "GiovanniCardamone",
@@ -18,16 +23,7 @@
       ]
     }
   ],
-  "projectName": "fastify-autoroutes",
-  "projectOwner": "GiovanniCardamone",
-  "repoType": "github",
-  "repoHost": "https://github.com",
-  "files": [
-    "README.md"
-  ],
-  "imageSize": 100,
-  "commit": true,
-  "commitConvention": "none",
-  "contributors": [],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "badgeTemplate": "[![All Contributors](https://img.shields.io/badge/all_contributors-<%= contributors.length %>-green.svg?style=flat)](#contributors)",
+  "skipCi": "true"
 }
