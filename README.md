@@ -103,8 +103,8 @@ Licensed under [MIT](./LICENSE)
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
-If you want to contribute remember to comment on an issue or pull request with:
-@all-contributors please add @jakebolam for infrastructure, tests and code
+> If you want to contribute remember to comment on an issue or pull request with:
+`@all-contributors please add @jakebolam for infrastructure, tests and code`
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
