@@ -5,6 +5,7 @@ import process from 'process'
 import path from 'path'
 import fs from 'fs'
 import { Interface } from 'readline'
+import { runInContext } from 'vm'
 
 export type ValidMethods =
   | 'DELETE'
@@ -23,7 +24,6 @@ const validMethods = [
   'post',
   'put',
   'options',
-  'all',
 ]
 
 export type AnyRoute = Omit<RouteOptions, 'method' | 'url'>
@@ -48,18 +48,24 @@ export interface Resource {
 
 interface FastifyAutoroutesOptions {
   dir: string
+  log?: boolean
 }
 
-function scan(fastify: FastifyInstance, baseDir: string, current: string) {
+function scan(
+  fastify: FastifyInstance,
+  baseDir: string,
+  current: string,
+  log: boolean = false
+) {
   const combined = path.join(baseDir, current)
   const combinedStat = fs.statSync(combined)
 
   if (combinedStat.isDirectory()) {
     for (const entry of fs.readdirSync(combined)) {
-      scan(fastify, baseDir, path.join(current, entry))
+      scan(fastify, baseDir, path.join(current, entry), log)
     }
   } else if (isAcceptableFile(combined, combinedStat)) {
-    autoload(fastify, combined, resourcePathOf(current))
+    autoload(fastify, combined, pathToUrl(current), log)
   }
 }
 
@@ -73,18 +79,38 @@ function isAcceptableFile(file: string, stat: fs.Stats): boolean {
   )
 }
 
-function resourcePathOf(path: string) {
-  const url =
+function pathToUrl(path: string) {
+  let url =
     '/' + path.replace('.ts', '').replace('.js', '').replace('index', '')
 
-  return url.endsWith('/') && url.length > 1
-    ? url.substring(0, url.length - 1)
-    : url.length == 0
-    ? '/'
-    : url
+  if (url.length === 1) return url
+
+  return url
+    .split('/')
+    .map((part) => replaceParamsToken(part))
+    .join('/')
 }
 
-function autoload(fastify: FastifyInstance, fullPath: string, url: string) {
+function replaceParamsToken(token: string) {
+  const regex = /{.+}/g
+
+  let result
+  while ((result = regex.exec(token)) !== null) {
+    token =
+      token.substring(0, result.index) +
+      result[0].replace('{', ':').replace('}', '') +
+      token.substr(result.index + result[0].length)
+  }
+
+  return token
+}
+
+function autoload(
+  fastify: FastifyInstance,
+  fullPath: string,
+  url: string,
+  log: boolean
+) {
   const module = loadModule(fullPath)
 
   if (typeof module !== 'function') {
@@ -96,13 +122,16 @@ function autoload(fastify: FastifyInstance, fullPath: string, url: string) {
   for (const [meth, route] of Object.entries<AnyRoute>(routes)) {
     if (validMethods.includes(meth)) {
       const method: ValidMethods = meth.toUpperCase() as ValidMethods
-      console.info('adding', method, url, route)
 
       fastify.route({
         url,
         method,
         ...route,
       })
+
+      if (log) {
+        console.info(`${method.toUpperCase()} ${url} => ${fullPath}`)
+      }
     }
   }
 }
@@ -118,19 +147,36 @@ function loadModule(path: string) {
 export default fastifyPlugin<FastifyAutoroutesOptions>(
   (fastify, options, next) => {
     if (!options.dir) {
-      return next(new Error('No autoroutes dir specified'))
+      const message = 'dir must be specified'
+      console.error(`[ERROR] fastify-autoload: ${message}`)
+      return next(new Error(message))
     }
 
     if (typeof options.dir !== 'string') {
-      return next(new Error('dir must be a string'))
+      const message = 'dir must be string'
+      console.error(`[ERROR] fastify-autoload: ${message}`)
+      return next(new Error(message))
     }
 
     const dirPath = path.join(process.cwd(), process.argv[1], '..', options.dir)
 
+    if (!fs.existsSync(dirPath)) {
+      const message = `dir ${dirPath} does not exists`
+      console.error(`[ERROR] fastify-autoload: ${message}`)
+      return next(new Error(message))
+    }
+
+    if (!fs.statSync(dirPath).isDirectory()) {
+      const message = `dir ${dirPath} must be a directory`
+      console.error(`[ERROR] fastify-autoload: ${message}`)
+      return next(new Error(message))
+    }
+
     try {
-      scan(fastify, dirPath, '')
+      scan(fastify, dirPath, '', options.log)
     } catch (error) {
-      console.error(`[ERROR] fastify-autoload: ${error.message}`)
+      const message = error.message
+      console.error(`[ERROR] fastify-autoload: ${message}`)
       return next(error)
     } finally {
       return next()
