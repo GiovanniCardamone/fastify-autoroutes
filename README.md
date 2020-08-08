@@ -22,8 +22,9 @@ npm install --save fastify-autoroutes
 
 ```js
 const fastify = require('fastify')
+const server = fastify()
 
-fastify.register(require('fastify-autoroutes'), {
+server.register(require('fastify-autoroutes'), {
   dir: './<autoroutes-directory>',
 })
 ```
