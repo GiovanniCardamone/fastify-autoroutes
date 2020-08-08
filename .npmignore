@@ -1,4 +1,6 @@
 .dependabot
+.github
+.nyc_output
 docs
 examples
 tests

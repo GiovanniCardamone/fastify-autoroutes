@@ -36,8 +36,6 @@ export type PostRoute = AnyRoute
 export type PutRoute = AnyRoute
 export type OptionsRoute = AnyRoute
 
-export type AllRoutes = AnyRoute
-
 export interface Resource {
   delete?: DeleteRoute
   get?: GetRoute
