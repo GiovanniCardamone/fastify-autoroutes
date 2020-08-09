@@ -180,8 +180,6 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
       dirPath = path.join(process.cwd(), process.argv[1], '..', options.dir)
     }
 
-    console.error('[DIRPATH]', dirPath)
-
     if (!fs.existsSync(dirPath)) {
       const message = `dir ${dirPath} does not exists`
       log && console.error(`[ERROR] fastify-autoload: ${message}`)
