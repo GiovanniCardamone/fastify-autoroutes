@@ -1,6 +1,6 @@
 {
     "name": "fastify-autoroutes",
-    "version": "1.0.7",
+    "version": "1.0.6",
     "description": "Map directory structure to routes",
     "main": "dist/index.js",
     "scripts": {
@@ -10,8 +10,8 @@
         "tap": "tap tests",
         "test": "npm run build && npm run tap",
         "test:watch": "nodemon --exec 'npm run tap'",
-        "coverage": "cross-env tap --cov --coverage-report=html tests",
-        "deploy": "npm run test && npm run coverage && npm publish"
+        "coverage": "tap --coverage-report=text-lcov | codecov -t $CODECOV_TOKEN",
+        "deploy": "npm run test && npm publish"
     },
     "repository": {
         "type": "git",
@@ -30,6 +30,7 @@
     "devDependencies": {
         "@types/node": "^14.0.27",
         "@types/tap": "^14.10.0",
+        "codecov": "^3.7.2",
         "cross-env": "^7.0.2",
         "eslint": "^7.6.0",
         "fastify": "^3.1.1",
