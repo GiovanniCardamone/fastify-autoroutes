@@ -38,12 +38,14 @@ server.register(require('fastify-autoroutes'), {
 
 export default (fastifyInstance) => ({
   get: {
-    // any of routes option allowed by fastify: https://www.fastify.io/docs/latest/Routes/#full-declaration
+    // any of routes option allowed by fastify: https://www.fastify.io/docs/latest/Routes/#routes-option
+    // except for `url` and `method`
+    
     handler: (request, reply) => {
       reply.send('hello index route')
     }
   },
-  // you can also use: ['delete', 'get', 'head', 'patch', 'post', 'put', 'options']
+  // other available methods are following: ['delete', 'get', 'head', 'patch', 'post', 'put', 'options']
 })
 ```
 
