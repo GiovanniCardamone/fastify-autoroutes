@@ -2,15 +2,18 @@
 
 ![JavaScript](https://img.shields.io/badge/ES6-Supported-yellow.svg?style=for-the-badge&logo=JavaScript) &nbsp; ![TypeScript](https://img.shields.io/badge/TypeScript-Supported-blue.svg?style=for-the-badge)
 
-![CI workflow](https://github.com/GiovanniCardamone/fastify-autoroutes/workflows/CI%20workflow/badge.svg)
 [![GitHub forks](https://img.shields.io/github/forks/GiovanniCardamone/fastify-autoroutes.svg)](https://github.com/GiovanniCardamone/fastify-autoroutes/network)
 [![GitHub stars](https://img.shields.io/github/stars/GiovanniCardamone/fastify-autoroutes.svg)](https://github.com/GiovanniCardamone/fastify-autoroutes/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/GiovanniCardamone/fastify-autoroutes.svg)](https://github.com/GiovanniCardamone/fastify-autoroutes/issues) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-gren.svg?style=flat)](#contributors-) <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![GitHub license](https://img.shields.io/github/license/GiovanniCardamone/fastify-autoroutes.svg)](https://github.com/GiovanniCardamone/fastify-autoroutes/blob/master/LICENSE)
+
+![CI workflow](https://github.com/GiovanniCardamone/fastify-autoroutes/workflows/CI%20workflow/badge.svg)
+[![codecov](https://codecov.io/gh/GiovanniCardamone/fastify-autoroutes/branch/dev/graph/badge.svg)](https://codecov.io/gh/GiovanniCardamone/fastify-autoroutes)
+
 [![NPM downloads](https://img.shields.io/npm/dm/fastify-autoroutes.svg?style=flat)](https://www.npmjs.com/package/fastify-autoroutes)
 [![Known Vulnerabilities](https://snyk.io/test/github/GiovanniCardamone/fastify-autoroutes/badge.svg)](https://snyk.io/test/github/GiovanniCardamone/fastify-autoroutes)
-[![codecov](https://codecov.io/gh/GiovanniCardamone/fastify-autoroutes/branch/dev/graph/badge.svg)](https://codecov.io/gh/GiovanniCardamone/fastify-autoroutes)
+
 > :star: Thanks everyone who want to star the project, it means a lot!
 
 Automatic add routes based on file system hierarchy.
