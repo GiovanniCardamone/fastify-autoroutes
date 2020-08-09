@@ -1,4 +1,4 @@
-name: CI workflow
+name: CI Test
 on: [push, pull_request]
 jobs:
     test:
@@ -21,9 +21,3 @@ jobs:
 
             - name: Install Dev
               run: npm i -D
-
-            - name: Tests
-              run: npm test
-
-            - name: Coverage
-              run: CODECOV_TOKEN="${{ secrets.CODECOV_TOKEN }}" npm run coverage
