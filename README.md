@@ -57,7 +57,6 @@ export default (fastifyInstance) => ({
 
 export default (fastifyInstance) => ({
   get: {
-    // [optional] your resource on get
     handler: (request, reply) => {
       reply.send(`photos of user ${request.params.userId}`)
     }
