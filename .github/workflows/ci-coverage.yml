@@ -1,7 +1,10 @@
 name: CI Coverage
-on: [push, pull_request]
+on:
+    push:
+        branches:
+            - master
 jobs:
-    test:
+    coverage:
         name: ${{ matrix.node-version }} ${{ matrix.os }}
         runs-on: ${{ matrix.os }}
         strategy:
