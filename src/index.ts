@@ -119,15 +119,12 @@ function autoload(
 
   const routes = module(fastify)
 
-  for (const [meth, route] of Object.entries<AnyRoute>(routes)) {
-    if (validMethods.includes(meth)) {
-      const method: ValidMethods = meth.toUpperCase() as ValidMethods
+  for (const [method, route] of Object.entries<RouteOptions>(routes)) {
+    if (validMethods.includes(method)) {
+      route.url = url
+      route.method = method.toUpperCase() as ValidMethods
 
-      fastify.route({
-        url,
-        method,
-        ...route,
-      })
+      fastify.route(route)
 
       if (log) {
         console.info(`${method.toUpperCase()} ${url} => ${fullPath}`)
