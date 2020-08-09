@@ -77,14 +77,14 @@ function isAcceptableFile(file: string, stat: fs.Stats): boolean {
   )
 }
 
-function pathToUrl(path: string) {
+function pathToUrl(filePath: string) {
   let url =
-    '/' + path.replace('.ts', '').replace('.js', '').replace('index', '')
+    '/' + filePath.replace('.ts', '').replace('.js', '').replace('index', '')
 
   if (url.length === 1) return url
 
   return url
-    .split('/')
+    .split(path.sep)
     .map((part) => replaceParamsToken(part))
     .join('/')
 }
@@ -142,8 +142,6 @@ function loadModule(path: string, log: boolean) {
     if (typeof module === 'object' && 'default' in module) {
       return module.default
     }
-
-    console.debug('module', module)
 
     throw new Error('unable to find any entrypoint for module')
   } catch (error) {
