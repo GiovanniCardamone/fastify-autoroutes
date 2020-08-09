@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "node-terminal",
+            "name": "Run Script: tap",
+            "request": "launch",
+            "command": "npm run tap",
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
