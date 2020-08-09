@@ -91,6 +91,8 @@ examples:
 - `_also_skipped_file.js`
 - `_also_skipped_file.ts`
 
+> :warning: also any `*.test.js` and `*.test.ts` are skipped!
+
 this is useful if you want to have a lib file containts functions that don't have to be a route, so just create the file with `_` prepending character
 
 ## :arrows_clockwise: Changes
