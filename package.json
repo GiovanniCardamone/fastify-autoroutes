@@ -5,12 +5,13 @@
     "main": "dist/index.js",
     "scripts": {
         "lint": "eslint",
-        "build": "tsc",
-        "watch": "nodemon",
-        "clean": "rm -rf dist",
-        "test": "npm run lint && tap tests",
+        "build": "npm run lint && tsc",
+        "build:watch": "nodemon --exec 'npm run build'",
+        "tap": "tap tests",
+        "test": "npm run build && npm run tap",
+        "test:watch": "nodemon --exec 'npm run tap'",
         "coverage": "cross-env tap --cov --coverage-report=html tests",
-        "deploy": "npm run lint && npm run build && npm run test && npm run coverage && npm publish"
+        "deploy": "npm run test && npm run coverage && npm publish"
     },
     "repository": {
         "type": "git",
@@ -28,6 +29,7 @@
     "homepage": "https://github.com/GiovanniCardamone/fastify-autoroutes#readme",
     "devDependencies": {
         "@types/node": "^14.0.27",
+        "@types/tap": "^14.10.0",
         "cross-env": "^7.0.2",
         "eslint": "^7.6.0",
         "fastify": "^3.1.1",
