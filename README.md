@@ -8,7 +8,7 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-gren.svg?style=flat)](#contributors-) <!-- ALL-CONTRIBUTORS-BADGE:END -->
 [![GitHub license](https://img.shields.io/github/license/GiovanniCardamone/fastify-autoroutes.svg)](https://github.com/GiovanniCardamone/fastify-autoroutes/blob/master/LICENSE)
 
-![CI workflow](https://github.com/GiovanniCardamone/fastify-autoroutes/workflows/CI%20workflow/badge.svg)
+![CI Test](https://github.com/GiovanniCardamone/fastify-autoroutes/workflows/CI%20Test/badge.svg)
 [![codecov](https://codecov.io/gh/GiovanniCardamone/fastify-autoroutes/branch/dev/graph/badge.svg)](https://codecov.io/gh/GiovanniCardamone/fastify-autoroutes)
 
 [![NPM downloads](https://img.shields.io/npm/dm/fastify-autoroutes.svg?style=flat)](https://www.npmjs.com/package/fastify-autoroutes)
