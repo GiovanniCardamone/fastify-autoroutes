@@ -135,9 +135,20 @@ function autoload(
 
 function loadModule(path: string) {
   try {
-    return require(path).default
+    const module = require(path)
+
+    if (typeof module === 'function') {
+      return module
+    }
+
+    if (typeof module === 'object' && 'default' in module) {
+      return module.default
+    }
+
+    throw new Error('unable to find any entrypoint for module')
   } catch (error) {
-    throw new Error(`unable to load module ${path}`)
+    console.error(`[ERROR] fastify-autoload: unable to load module ${path}`)
+    throw error
   }
 }
 
@@ -155,7 +166,13 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
       return next(new Error(message))
     }
 
-    const dirPath = path.join(process.cwd(), process.argv[1], '..', options.dir)
+    let dirPath: string
+
+    if (path.isAbsolute(process.argv[1])) {
+      dirPath = path.join(process.argv[1], '..', options.dir)
+    } else {
+      dirPath = path.join(process.cwd(), process.argv[1], '..', options.dir)
+    }
 
     if (!fs.existsSync(dirPath)) {
       const message = `dir ${dirPath} does not exists`

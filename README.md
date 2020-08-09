@@ -11,7 +11,9 @@
 [![NPM downloads](https://img.shields.io/npm/dm/fastify-autoroutes.svg?style=flat)](https://www.npmjs.com/package/fastify-autoroutes)
 [![Known Vulnerabilities](https://snyk.io/test/github/GiovanniCardamone/fastify-autoroutes/badge.svg)](https://snyk.io/test/github/GiovanniCardamone/fastify-autoroutes)
 
-Automatic add routes based on file system hierarchy
+> :star: Thanks everyone who want to star the project, it means a lot!
+
+Automatic add routes based on file system hierarchy.
 
 **[Full Documentation](https://giovannicardamone.github.io/fastify-autoroutes/)**
 
@@ -40,7 +42,7 @@ export default (fastifyInstance) => ({
   get: {
     // any of routes option allowed by fastify: https://www.fastify.io/docs/latest/Routes/#routes-option
     // except for `url` and `method`
-    
+
     handler: (request, reply) => {
       reply.send('hello index route')
     }
