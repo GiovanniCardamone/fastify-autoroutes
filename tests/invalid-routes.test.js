@@ -6,7 +6,7 @@ const autoroutes = require('../dist')
 
 const errorLabel = autoroutes.errorLabel
 
-tap.test('invalid type routes directory', { saveFixture: true }, (t) => {
+tap.test('invalid type routes directory', { saveFixture: false }, (t) => {
   const server = fastify()
 
   const invalidDir = t.testdir({
