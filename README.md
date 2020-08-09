@@ -36,15 +36,15 @@ server.register(require('fastify-autoroutes'), {
 //file: `<autoroutes-directory>/some/route/index.js`
 //mapped to: `<your host>/some/route`
 
-export default (fastifyInstance) => {
+export default (fastifyInstance) => ({
   get: {
-    // [optional] your resource on get
+    // any of routes option allowed by fastify: https://www.fastify.io/docs/latest/Routes/#full-declaration
     handler: (request, reply) => {
       reply.send('hello index route')
     }
   },
   // you can also use: ['delete', 'get', 'head', 'patch', 'post', 'put', 'options']
-}
+})
 ```
 
 > :information_source: use syntax `:paramName` or `{paramName}` in file name to specify url parameters
@@ -53,17 +53,17 @@ export default (fastifyInstance) => {
 //file: `<autoroutes-directory>/users/{userId}/photos.js`
 //mapped to: `<your host>/users/:userId/photos`
 
-export default (fastifyInstance) => {
+export default (fastifyInstance) => ({
   get: {
     // [optional] your resource on get
     handler: (request, reply) => {
       reply.send(`photos of user ${request.params.userId}`)
     }
   },
-}
+})
 ```
 
-## :arrow_forward: Accepted Methods in Module
+## :arrow_forward: Accepted methods in module
 
 - delete
 - get
@@ -73,7 +73,7 @@ export default (fastifyInstance) => {
 - put
 - options
 
-## :arrow_forward: Url Parameters using path name
+## :arrow_forward: Url parameters using path name
 
 to use url parameters in your route use `{parmName}` in your file or directory, it will be automatically changet to fastify parameter
 
