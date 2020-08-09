@@ -9,7 +9,7 @@
 [![GitHub license](https://img.shields.io/github/license/GiovanniCardamone/fastify-autoroutes.svg)](https://github.com/GiovanniCardamone/fastify-autoroutes/blob/master/LICENSE)
 
 ![CI Test](https://github.com/GiovanniCardamone/fastify-autoroutes/workflows/CI%20Test/badge.svg)
-[![codecov](https://codecov.io/gh/GiovanniCardamone/fastify-autoroutes/branch/dev/graph/badge.svg)](https://codecov.io/gh/GiovanniCardamone/fastify-autoroutes)
+[![codecov](https://codecov.io/gh/GiovanniCardamone/fastify-autoroutes/branch/master/graph/badge.svg)](https://codecov.io/gh/GiovanniCardamone/fastify-autoroutes)
 
 [![NPM downloads](https://img.shields.io/npm/dm/fastify-autoroutes.svg?style=flat)](https://www.npmjs.com/package/fastify-autoroutes)
 [![Known Vulnerabilities](https://snyk.io/test/github/GiovanniCardamone/fastify-autoroutes/badge.svg)](https://snyk.io/test/github/GiovanniCardamone/fastify-autoroutes)
