@@ -1,92 +1,198 @@
-# fastify-autoroutes
+# [fastify-autoroutes](https://github.com/GiovanniCardamone/fastify-autoroutes)
 
-Automatic add routes based on file system hierarchy
+fastify-autoroutes help to manage the routes in your project and map it automatically based on the file system hierarchy. So you don't have to search around where a function mapped to url is locate. Just follow the url path in your filesystem.
 
 ## Install
+
+to install fastify-autoroutes you can just download it from npmjs respository with:
 
 ```sh
 npm install --save fastify-autoroutes
 ```
 
-## Usage
+## Initialize plugin
 
-```js
-const fastify = require('fastify')
-const server = fastify()
+> :information_source: `dir` is relative to your current working directory.
+>
+> So if you are in `src` folder is `src/routes`.
+> Otherwise if you are in `dist` folder it's `dist/routes`
+>
+> javascript
+>
+> ```javascript
+> const fastify = require('fastify')
+> const server = fastify()
+>
+> server.register(require('fastify-autoroutes'), {
+>   dir: './routes',
+> })
+> ```
 
+## Your first autoroute
+
+suppose to have a project thats looks like this:
+
+```text
+/
+├── index.js
+├── package.json
+└── routes
+    └── index.js
+```
+
+and the plugin configured in this way:
+
+```javascript
 server.register(require('fastify-autoroutes'), {
-  dir: './<autoroutes-directory>', // relative to your cwd
+  dir: './routes',
 })
 ```
 
-```js
-//file: `<autoroutes-directory>/some/route/index.js`
-//mapped to: `<your host>/some/route`
+automatically on start the plugin will load the content of `routes` folder and map it at the start of your url.
 
-export default (fastifyInstance) => {
-  get: {
-    // [optional] your resource on get
-    handler: (request, reply) => {
-      reply.send('hello index route')
-    }
-  },
-  // you can also use: ['delete', 'get', 'head', 'patch', 'post', 'put', 'options']
+> `http://your-host` is mapped to `your-project/routes/index.js`
+
+and any of method in `your-project/routes/index.js` are exposed to that url.
+
+## Nested autoroutes
+
+let's suppose we have a more complex routes in our system like the following one:
+
+```text
+/
+├── index.js
+├── package.json
+└── routes
+    └── hello
+        └── world.js
+```
+
+in this case, the plugin will recursivley scan any of routes subdirectory and map it urls
+
+> example server
+>
+> ```javascript
+> const fastify = require('fastify')
+> const server = fastify()
+>
+> server.register(require('fastify-autoroutes'), {
+>   dir: './routes',
+> })
+>
+> server.ready(function () {
+>   console.log(server.printRoutes())
+> })
+>
+> server.listen(9999)
+> ```
+>
+> output of `server.printRoutes()`
+>
+> ```text
+> └── /
+>     └── hello/world (GET|POST)
+> ```
+
+> :warning: those two directory structure are **NOT** equivalent:
+> :information_source: you have to set `ignoreTrailingSlash: true` to make it the same.
+>
+> ```text
+> /                                    | /
+> ├── index.js                         | ├── index.js
+> ├── package.json                     | ├── package.json
+> └── routes                           | └── routes
+>     └── hello                        |     └── hello
+>         └── world.js                 |         └── world
+>                                      |             └── index.js
+>                                      |
+> mapped to url:                       | mapped to url:
+> http://your-host/hello/world         | http://your-host/hello/world/
+> ```
+
+## Url parameters in autoroutes
+
+Is very useful to have parameters in urls, and we need some syntax to handle this "special" case. We use liquid variable format in file names to handle it.
+
+> :information_source: you can also use syntax `:paramName` but is not windows an NTFS file name compatible, so be careful if you use it and than you want to move to Windows
+
+example:
+
+```text
+.
+├── index.js
+├── package.json
+└── routes
+    └── users
+        ├── {userId}
+        │   └── posts.js
+        └── {userId}.js
+```
+
+in this scenario we will have a routes like the following one:
+
+```text
+└── /
+    └── users/
+        └── :userId (GET)
+            └── /posts (GET)
+```
+
+## Example of javascript module (es3)
+
+here is the [List of supported routes options](https://www.fastify.io/docs/latest/Routes/#routes-option) provided by fastify, any of those you can use in your route method.
+
+```javascript
+module.exports = function (fastifyInstance) {
+  return {
+    get: {
+      // options `method` and `url` are ignored, the other one is the same
+      handler: function (request, reply) {
+        reply.send('this is get method')
+      },
+    },
+  }
 }
 ```
 
-> :information_source: use syntax `:paramName` or `{paramName}` in file name to specify url parameters
+## Example of javascript module (es6)
 
-```js
-//file: `<autoroutes-directory>/users/{userId}/photos.js`
-//mapped to: `<your host>/users/:userId/photos`
-
-export default (fastifyInstance) => {
+```javascript
+export default () => ({
   get: {
-    // [optional] your resource on get
-    handler: (request, reply) => {
-      reply.send(`photos of user ${request.params.userId}`)
-    }
+    handler: async () => 'this is get method',
   },
-}
+})
 ```
 
-## Accepted Methods in Module
+## Typescript support for modules
 
-- delete
-- get
-- head
-- patch
-- post
-- put
-- options
+is useful to have typescript for strict type check of the module we export and provide to fastify, here is an example of how to use is.
 
-## Url Parameters using path name
+```typescript
+import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify'
+import { Resource } from 'fastify-autoroutes'
 
-to use url parameters in your route use `{parmName}` in your file or directory, it will be automatically changet to fastify parameter
-
-## Skip files in autoroutes directory
-
-to skip file in routes directory, prepend the `.` or `_` charater to filename
-
-examples:
-
-- `.skipped_directory`
-- `_also_skipped_directory`
-- `.skipped_file.js`
-- `.skipped_file.ts`
-- `_also_skipped_file.js`
-- `_also_skipped_file.ts`
-
-this is useful if you want to have a lib file containts functions that don't have to be a route, so just create the file with `_` prepending character
-
-## Examples
-
-- [Example javascript App](https://github.com/GiovanniCardamone/fastify-autoroutes/tree/master/examples/simple-js-app)
-- [Example typescript App](https://github.com/GiovanniCardamone/fastify-autoroutes/tree/master/examples/simple-ts-app)
+export default (fastify: FastifyInstance) => {
+  return <Resource> {
+    post: {
+      handler: async (request: FastifyRequest, reply: FastifyReply) => {
+        return 'hello world'
+      },
+    },
+  }
+}
+```
 
 ## Contribute
 
-To contribute to [fastify-autoroutes](https://github.com/GiovanniCardamone/fastify-autoroutes) please check the [CONTRIBUTING](https://github.com/GiovanniCardamone/fastify-autoroutes/master/CONTRIBUTING.md) file.
+That's all, i hope you like my little module and contribution of any kind are welcome!
 
-All contributions are apprecciated :smiley:
+If you want to contribute remember to comment on an issue or pull request with:
 
+`@all-contributors please add @jakebolam for infrastructure, tests and code`
+
+here you can check the [emoji key](https://allcontributors.org/docs/en/emoji-key)
+
+and i will pull the request as soon as possible.
+
+Consider to leave a :star: if you like the project :blush:
