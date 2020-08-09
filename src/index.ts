@@ -5,6 +5,8 @@ import process from 'process'
 import path from 'path'
 import fs from 'fs'
 
+export const errorLabel = '[ERROR] fastify-autoload:'
+
 export type ValidMethods =
   | 'DELETE'
   | 'GET'
@@ -112,7 +114,9 @@ function autoload(
   const module = loadModule(fullPath, log)
 
   if (typeof module !== 'function') {
-    throw new Error(`module ${fullPath} must export default function`)
+    throw new Error(
+      `${errorLabel} module ${fullPath} must export default function`
+    )
   }
 
   const routes = module(fastify)
@@ -143,10 +147,9 @@ function loadModule(path: string, log: boolean) {
       return module.default
     }
 
-    throw new Error('unable to find any entrypoint for module')
+    return
   } catch (error) {
-    log &&
-      console.error(`[ERROR] fastify-autoload: unable to load module ${path}`)
+    log && console.error(`${errorLabel} unable to load module ${path}`)
 
     throw error
   }
@@ -157,15 +160,15 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
     const log = options.log ?? true
 
     if (!options.dir) {
-      const message = 'dir must be specified'
-      log && console.error(`[ERROR] fastify-autoload: ${message}`)
+      const message = `${errorLabel} dir must be specified`
+      log && console.error(message)
 
       return next(new Error(message))
     }
 
     if (typeof options.dir !== 'string') {
-      const message = 'dir must be the path of autoroutes-directory'
-      log && console.error(`[ERROR] fastify-autoload: ${message}`)
+      const message = `${errorLabel} dir must be the path of autoroutes-directory`
+      log && console.error(message)
 
       return next(new Error(message))
     }
@@ -181,15 +184,15 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
     }
 
     if (!fs.existsSync(dirPath)) {
-      const message = `dir ${dirPath} does not exists`
-      log && console.error(`[ERROR] fastify-autoload: ${message}`)
+      const message = `${errorLabel} dir ${dirPath} does not exists`
+      log && console.error(message)
 
       return next(new Error(message))
     }
 
     if (!fs.statSync(dirPath).isDirectory()) {
-      const message = `dir ${dirPath} must be a directory`
-      log && console.error(`[ERROR] fastify-autoload: ${message}`)
+      const message = `${errorLabel} dir ${dirPath} must be a directory`
+      log && console.error(message)
 
       return next(new Error(message))
     }
@@ -197,8 +200,7 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
     try {
       scan(fastify, dirPath, '', options.log)
     } catch (error) {
-      const message = error.message
-      log && console.error(`[ERROR] fastify-autoload: ${message}`)
+      log && console.error(error.message)
 
       return next(error)
     } finally {
