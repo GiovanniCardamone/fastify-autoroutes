@@ -24,3 +24,6 @@ jobs:
 
             - name: Tests
               run: npm test
+
+            - name: Coverage
+              run: CODECOV_TOKEN="${{ secrets.CODECOV_TOKEN }}" npm run coverage
