@@ -6,12 +6,13 @@ docs
 examples
 src
 tests
-.all-contributorsrc
 .editorconfig
+.env
 .prettierignore
 .prettierrc
 .taprc
 CHANGELOG.md
 CONTRIBUTING.md
 eslint.json
+logo.png
 nodemon.json
