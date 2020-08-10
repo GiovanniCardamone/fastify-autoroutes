@@ -75,7 +75,7 @@ function isAcceptableFile(file: string, stat: fs.Stats): boolean {
     !file.startsWith('_') &&
     !file.endsWith('.test.js') &&
     !file.endsWith('.test.ts') &&
-    (stat.isFile() || stat.isSymbolicLink())
+    stat.isFile()
   )
 }
 
@@ -115,7 +115,7 @@ function autoload(
 
   if (typeof module !== 'function') {
     throw new Error(
-      `${errorLabel} module ${fullPath} must export default function`
+      `${errorLabel} module ${fullPath} must be valid js/ts module and should export route methods definitions`
     )
   }
 
@@ -136,23 +136,17 @@ function autoload(
 }
 
 function loadModule(path: string, log: boolean) {
-  try {
-    const module = require(path)
+  const module = require(path)
 
-    if (typeof module === 'function') {
-      return module
-    }
-
-    if (typeof module === 'object' && 'default' in module) {
-      return module.default
-    }
-
-    return
-  } catch (error) {
-    log && console.error(`${errorLabel} unable to load module ${path}`)
-
-    throw error
+  if (typeof module === 'function') {
+    return module
   }
+
+  if (typeof module === 'object' && 'default' in module) {
+    return module.default
+  }
+
+  return
 }
 
 export default fastifyPlugin<FastifyAutoroutesOptions>(
