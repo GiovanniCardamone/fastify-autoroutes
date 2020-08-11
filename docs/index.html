@@ -38,7 +38,9 @@
       }
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig)
-      firebase.analytics().logEvent(window.location.origin)
+      firebase.analytics().logEvent('opened_app', {
+        app: 'giovannicardamone.github.com/fastify-autoroutes',
+      })
     </script>
   </body>
 </html>
