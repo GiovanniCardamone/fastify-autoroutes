@@ -1,4 +1,4 @@
-# [fastify-autoroutes](https://github.com/GiovanniCardamone/fastify-autoroutes)
+# fastify-autoroutes
 
 fastify-autoroutes help to manage the routes in your project and map it automatically based on the file system hierarchy. So you don't have to search around where a function mapped to url is locate. Just follow the url path in your filesystem.
 
