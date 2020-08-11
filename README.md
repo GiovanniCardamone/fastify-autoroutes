@@ -88,7 +88,7 @@ export default (fastifyInstance) => ({
 
 ## :arrow_forward: Url parameters using path name
 
-to use url parameters in your route use `{parmName}` in your file or directory, it will be automatically changet to fastify parameter
+to use url parameters in your route use `{parmName}` in your file or directory, it will be automatically changed to fastify parameter
 
 ## :arrow_forward: Skip files in autoroutes directory
 
