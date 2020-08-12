@@ -71,8 +71,8 @@ function scan(
 
 function isAcceptableFile(file: string, stat: fs.Stats): boolean {
   return (
-    !file.startsWith('.') &&
-    !file.startsWith('_') &&
+    !path.basename(file).startsWith('.') &&
+    !path.basename(file).startsWith('_') &&
     !file.endsWith('.test.js') &&
     !file.endsWith('.test.ts') &&
     stat.isFile()

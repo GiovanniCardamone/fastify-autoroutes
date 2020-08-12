@@ -2,6 +2,7 @@ const tap = require('tap')
 
 const fastify = require('fastify')
 const autoroutes = require('../dist')
+const errorLabel = autoroutes.errorLabel
 
 const exampleGetRoute = `module.exports = function (server) {
   return {
@@ -268,3 +269,79 @@ tap.test('example es6 exports default module', { saveFixture: false }, (t) => {
     }
   )
 })
+
+tap.test(
+  'skip routes with starting . charater',
+  { saveFixture: false },
+  (t) => {
+    const server = fastify()
+
+    const dir = t.testdir({
+      '.hello.js': exampleGetRouteDefaultModule,
+    })
+
+    server.register(autoroutes, {
+      dir: dir,
+    })
+
+    server.inject(
+      {
+        method: 'GET',
+        url: '/hello',
+      },
+      (err, res) => {
+        t.is(res.statusCode, 404)
+
+        server.inject(
+          {
+            method: 'GET',
+            url: '/.hello',
+          },
+          (err, res) => {
+            t.is(res.statusCode, 404)
+
+            t.end()
+          }
+        )
+      }
+    )
+  }
+)
+
+tap.test(
+  'skip routes with starting _ charater',
+  { saveFixture: false },
+  (t) => {
+    const server = fastify()
+
+    const dir = t.testdir({
+      '_hello.js': exampleGetRouteDefaultModule,
+    })
+
+    server.register(autoroutes, {
+      dir: dir,
+      log: true,
+    })
+
+    server.inject(
+      {
+        method: 'GET',
+        url: '/hello',
+      },
+      (err, res) => {
+        t.is(res.statusCode, 404)
+
+        server.inject(
+          {
+            method: 'GET',
+            url: '/_hello',
+          },
+          (err, res) => {
+            t.is(res.statusCode, 404)
+            t.end()
+          }
+        )
+      }
+    )
+  }
+)
