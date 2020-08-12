@@ -21,9 +21,18 @@
         "example",
         "maintenance"
       ]
+    },
+    {
+      "login": "genbs",
+      "name": "Gennaro",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/6159598?v=4",
+      "profile": "https://github.com/genbs",
+      "contributions": [
+        "design"
+      ]
     }
   ],
   "contributorsPerLine": 7,
   "badgeTemplate": "[![All Contributors](https://img.shields.io/badge/all_contributors-<%= contributors.length %>-green.svg?style=flat)](#contributors)",
-  "skipCi": "true"
+  "skipCi": true
 }
