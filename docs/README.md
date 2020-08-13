@@ -1,7 +1,5 @@
 # fastify-autoroutes
 
-![logo](./logo.png)
-
 fastify-autoroutes help to manage the routes in your project and map it automatically based on the file system hierarchy. So you don't have to search around where a function mapped to url is locate. Just follow the url path in your filesystem.
 
 ## Install
@@ -189,12 +187,6 @@ export default (fastify: FastifyInstance) => {
 
 That's all, i hope you like my little module and contribution of any kind are welcome!
 
-If you want to contribute remember to comment on an issue or pull request with:
-
-`@all-contributors please add @jakebolam for infrastructure, tests and code`
-
-here you can check the [emoji key](https://allcontributors.org/docs/en/emoji-key)
-
-and i will pull the request as soon as possible.
+I will mention you in my README for any of yours contribution
 
 Consider to leave a :star: if you like the project :blush:

@@ -11,7 +11,7 @@
     />
     <link
       rel="stylesheet"
-      href="//cdn.jsdelivr.net/npm/docsify/lib/themes/vue.css"
+      href="https://cdn.jsdelivr.net/npm/docsify/lib/themes/dark.css"
     />
   </head>
   <body>
@@ -20,26 +20,16 @@
       window.$docsify = {
         name: 'fastify-autoroutes',
         repo: 'https://github.com/GiovanniCardamone/fastify-autoroutes',
+        autoHeader: true,
+        themeColor: '#fff',
       }
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/docsify/lib/docsify.min.js"
+      data-ga="UA-175226257-1"
+    ></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/ga.min.js"></script>
 
-    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-analytics.js"></script>
-    <script>
-      // Your web app's Firebase configuration
-      var firebaseConfig = {
-        apiKey: 'AIzaSyD_70i9dSXQVDiLYhU7NELkA2n1naHeG3I',
-        projectId: 'giovannicardamone',
-        appId: '1:447168596756:web:bc03fb4421dd403d965001',
-        measurementId: 'G-3LH45D68PH',
-      }
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig)
-      firebase.analytics().logEvent('opened_app', {
-        app: 'giovannicardamone.github.com/fastify-autoroutes',
-      })
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
   </body>
 </html>
