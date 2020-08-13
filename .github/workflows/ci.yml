@@ -51,17 +51,7 @@ jobs:
               run: |
                   npm run coverage
 
-    coverage:
-        needs: test
-
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: Display project
-              run: |
-                  ls
-
-            - name: Coveralls Finished
+            - name: Coveralls Parallel
               uses: coverallsapp/github-action@master
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
