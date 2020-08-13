@@ -102,10 +102,6 @@ examples:
 
 this is useful if you want to have a lib file containts functions that don't have to be a route, so just create the file with `_` prepending character
 
-## :arrows_clockwise: Changes
-
-Check [CHANGELOG](./CHANGELOG.md)
-
 ## :page_facing_up: License
 
 Licensed under [MIT](./LICENSE)
@@ -113,10 +109,6 @@ Licensed under [MIT](./LICENSE)
 ## :sparkles: Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-> If you want to contribute remember to comment on an issue or pull request with:
->
-> `@all-contributors please add @jakebolam for infrastructure, tests and code`
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
