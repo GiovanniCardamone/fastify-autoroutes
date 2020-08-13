@@ -1,5 +1,13 @@
 name: CI
-on: ['push', 'pull_request']
+on:
+    push:
+        paths-ignore:
+            - 'docs/**'
+            - '*.md'
+    pull_request:
+        paths-ignore:
+            - 'docs/**'
+            - '*.md'
 
 jobs:
     test:
@@ -34,20 +42,15 @@ jobs:
               run: |
                   npm run test
 
-            - name: Run Coverage
-              run: |
-                  npm run coverage
-
     coverage:
         needs: test
 
         runs-on: ubuntu-latest
 
         steps:
-            - name: Coveralls Make Coverage Report
-              uses: coverallsapp/github-action@master
-              with:
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
+            - name: Run Coverage
+              run: |
+                  npm run coverage
 
             - name: Coveralls Finished
               uses: coverallsapp/github-action@master
