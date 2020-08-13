@@ -10,7 +10,7 @@
         "tap": "tap tests",
         "test": "npm run build && npm run tap",
         "test:watch": "nodemon --exec 'npm run tap'",
-        "coverage": "tap --coverage-report=text-lcov | codecov -t $CODECOV_TOKEN",
+        "coverage": "tap --cov --coverage-report=lcovonly",
         "coverage:show": "tap --cov --coverage-report=html tests",
         "deploy": "npm run test && npm publish"
     },
