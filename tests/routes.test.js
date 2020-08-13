@@ -345,3 +345,42 @@ tap.test(
     )
   }
 )
+
+tap.test(
+  'skip routes ending with .test.js or .test.ts',
+  { saveFixture: false },
+  (t) => {
+    const server = fastify()
+
+    const dir = t.testdir({
+      'someJsRoute.test.js': exampleGetRouteDefaultModule,
+      'someTsRoute.test.ts': exampleGetRouteDefaultModule,
+    })
+
+    server.register(autoroutes, {
+      dir: dir,
+      log: true,
+    })
+
+    server.inject(
+      {
+        method: 'GET',
+        url: '/someJsRoute',
+      },
+      (err, res) => {
+        t.is(res.statusCode, 404)
+
+        server.inject(
+          {
+            method: 'GET',
+            url: '/someTsRoute',
+          },
+          (err, res) => {
+            t.is(res.statusCode, 404)
+            t.end()
+          }
+        )
+      }
+    )
+  }
+)
