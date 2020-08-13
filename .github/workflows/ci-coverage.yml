@@ -1,29 +1,23 @@
 name: CI Coverage
-on:
-    push:
-        branches:
-            - master
+on: ['push', 'pull_request']
 jobs:
-    coverage:
-        name: ${{ matrix.node-version }} ${{ matrix.os }}
-        runs-on: ${{ matrix.os }}
-        strategy:
-            fail-fast: false
-            matrix:
-                os: [ubuntu-latest]
-                node-version: [14]
+    build:
+        name: Build
+        runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v1
 
-            - name: Use Node.js ${{ matrix.node-version }}
+            - name: Use Node.js 10.x
               uses: actions/setup-node@v1
               with:
-                  node-version: ${{ matrix.node-version }}
-            - name: Install
-              run: npm i
+                  node-version: 10.x
 
-            - name: Install Dev
-              run: npm i -D
+            - name: npm install, make coverage
+              run: |
+                  npm install
+                  make coverage
 
-            - name: Coverage
-              run: CODECOV_TOKEN=${{ secrets.CODECOV_TOKEN }} npm run coverage
+            - name: Coveralls
+              uses: coverallsapp/github-action@master
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}

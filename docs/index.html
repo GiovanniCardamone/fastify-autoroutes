@@ -31,5 +31,11 @@
     <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/ga.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-typescript.min.js"></script>
+
+    <script>
+      window.addEventListener('hashchange', function (e) {
+        ga('send', 'event', 'HashChange', new URL(e.newURL).hash)
+      })
+    </script>
   </body>
 </html>
