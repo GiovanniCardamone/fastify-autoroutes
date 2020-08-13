@@ -42,16 +42,21 @@ jobs:
               run: |
                   npm run test
 
+            - name: Run Coverage
+              run: |
+                  npm run coverage
+
+            - name: Deploy Coveralls
+              uses: coverallsapp/github-action@master
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+
     coverage:
         needs: test
 
         runs-on: ubuntu-latest
 
         steps:
-            - name: Run Coverage
-              run: |
-                  npm run coverage
-
             - name: Coveralls Finished
               uses: coverallsapp/github-action@master
               with:
