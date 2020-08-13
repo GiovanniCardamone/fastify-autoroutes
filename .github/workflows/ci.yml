@@ -18,10 +18,8 @@ jobs:
 
         strategy:
             matrix:
-                # node-version: [10.x, 12.x, 13.x, 14.x]
-                # os: [ubuntu-latest, windows-latest, macOS-latest]
-                node-version: [10.x]
-                os: [ubuntu-latest]
+                node-version: [10.x, 12.x, 13.x, 14.x]
+                os: [ubuntu-latest, windows-latest, macOS-latest]
 
         steps:
             - uses: actions/checkout@v2
@@ -51,7 +49,7 @@ jobs:
               run: |
                   npm run coverage
 
-            - name: Coveralls Parallel
+            - name: Deploy Coveralls
               uses: coverallsapp/github-action@master
               with:
                   github-token: ${{ secrets.GITHUB_TOKEN }}
