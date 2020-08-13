@@ -55,6 +55,10 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
+            - name: Display coverage
+              run: |
+                  cat ./coverage/lcov.info
+
             - name: Coveralls Finished
               uses: coverallsapp/github-action@master
               with:
