@@ -1,4 +1,5 @@
 const tap = require('tap')
+const path = require('path')
 
 const fastify = require('fastify')
 const autoroutes = require('../dist')
@@ -168,47 +169,47 @@ tap.test(
   (t) => {
     if (process.platform === 'win32') {
       t.end()
-    }
+    } else {
+      const server = fastify()
 
-    const server = fastify()
-
-    const dir = t.testdir({
-      users: {
-        '{USERID}.js': exampleGetRouteJSONParam,
-        '{USERID}': {
-          'index.js': exampleGetRouteJSONParam,
-        },
-      },
-    })
-
-    server.register(autoroutes, {
-      dir: dir,
-    })
-
-    const USERID = 'foo'
-
-    server.inject(
-      {
-        method: 'GET',
-        url: `/users/${USERID}`,
-      },
-      (err, res) => {
-        t.is(err, null)
-        t.is(JSON.parse(res.payload).USERID, USERID)
-
-        server.inject(
-          {
-            method: 'GET',
-            url: `/users/${USERID}/`,
+      const dir = t.testdir({
+        users: {
+          '{USERID}.js': exampleGetRouteJSONParam,
+          '{USERID}': {
+            'index.js': exampleGetRouteJSONParam,
           },
-          (err, res) => {
-            t.is(err, null)
-            t.is(JSON.parse(res.payload).USERID, USERID)
-            t.end()
-          }
-        )
-      }
-    )
+        },
+      })
+
+      server.register(autoroutes, {
+        dir: dir,
+      })
+
+      const USERID = 'foo'
+
+      server.inject(
+        {
+          method: 'GET',
+          url: `/users/${USERID}`,
+        },
+        (err, res) => {
+          t.is(err, null)
+          t.is(JSON.parse(res.payload).USERID, USERID)
+
+          server.inject(
+            {
+              method: 'GET',
+              url: `/users/${USERID}/`,
+            },
+            (err, res) => {
+              t.is(err, null)
+              t.is(JSON.parse(res.payload).USERID, USERID)
+              t.end()
+            }
+          )
+        }
+      )
+    }
   }
 )
 

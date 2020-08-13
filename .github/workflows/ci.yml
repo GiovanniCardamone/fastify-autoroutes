@@ -1,0 +1,55 @@
+name: CI
+on:
+    push:
+        paths-ignore:
+            - 'docs/**'
+            - '*.md'
+    pull_request:
+        paths-ignore:
+            - 'docs/**'
+            - '*.md'
+
+env:
+    CI: true
+
+jobs:
+    test:
+        runs-on: ${{ matrix.os }}
+
+        strategy:
+            matrix:
+                node-version: [10.x, 12.x, 13.x, 14.x]
+                os: [ubuntu-latest, windows-latest, macOS-latest]
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Use Node.js
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Install
+              run: |
+                  npm i
+
+            - name: Install Dev
+              run: |
+                  npm i -D
+
+            - name: Build
+              run: |
+                  npm run build
+
+            - name: Run tests
+              run: |
+                  npm run test
+
+            - name: Run Coverage
+              run: |
+                  npm run coverage
+
+            - name: Deploy Coveralls
+              uses: coverallsapp/github-action@master
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
