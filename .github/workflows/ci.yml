@@ -9,6 +9,9 @@ on:
             - 'docs/**'
             - '*.md'
 
+env:
+    CI: true
+
 jobs:
     test:
         runs-on: ${{ matrix.os }}
@@ -45,11 +48,6 @@ jobs:
             - name: Run Coverage
               run: |
                   npm run coverage
-
-            - name: Deploy Coveralls
-              uses: coverallsapp/github-action@master
-              with:
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
 
     coverage:
         needs: test
