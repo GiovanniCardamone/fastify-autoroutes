@@ -1,11 +1,47 @@
 name: CI
 on: ['push', 'pull_request']
-coverage:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-        - name: Coveralls Finished
-          uses: coverallsapp/github-action@master
-          with:
-              github-token: ${{ secrets.GITHUB_TOKEN }}
-              parallel-finished: true
+
+jobs:
+    test:
+        runs-on: ${{ matrix.os }}
+
+        strategy:
+            matrix:
+                node-version: [10.x, 12.x, 13.x, 14.x]
+                os: [ubuntu-latest, windows-latest, macOS-latest]
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Use Node.js
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+
+            - name: Install
+              run: |
+                  npm i
+
+            - name: Install Dev
+              run: |
+                  npm i -D
+
+            - name: Run tests
+              run: |
+                  npm run test
+
+            - name: Coveralls
+              uses: coverallsapp/github-action@master
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+
+    coverage:
+        needs: test
+
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Coveralls Finished
+              uses: coverallsapp/github-action@master
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
