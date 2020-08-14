@@ -89,7 +89,9 @@ export default (fastifyInstance) => ({
 
 ## :arrow_forward: Route module definition
 
-Method specification is available here: [Method specification](https://www.fastify.io/docs/latest/Routes/#full-declaration)
+Method specification for attributes is available here: [Method specification](https://www.fastify.io/docs/latest/Routes/#full-declaration)
+
+> :information_source: attributes `url` and `method` are dynamically provided
 
 Allowed attributes mapped to Http methods in module:
 
