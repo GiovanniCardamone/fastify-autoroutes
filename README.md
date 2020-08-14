@@ -30,7 +30,7 @@ npm install --save fastify-autoroutes
 
 ## :blue_book: Usage
 
-register plugin
+### Register plugin
 
 ```js
 const fastify = require('fastify')
@@ -41,7 +41,7 @@ server.register(require('fastify-autoroutes'), {
 })
 ```
 
-create file in autoroutes directory
+### Create file in autoroutes directory
 
 ```js
 //file: `<autoroutes-directory>/some/route.js`
@@ -54,9 +54,12 @@ export default (fastifyInstance) => ({
 })
 ```
 
-using typescript support for module
+### Using typescript support for module
 
 ```typescript
+//file: `<autoroutes-directory>/some/route.ts`
+//url:  `http://your-host/some/route`
+
 import { FastifyInstance } from 'fastify'
 import { Resource } from 'fastify-autoroutes'
 
@@ -67,7 +70,7 @@ export default (fastify: FastifyInstance) => <Resource> {
 }
 ```
 
-allow params in autoroutes
+### Accepts params in autoroutes
 
 > :information_source: file/directory name must follow syntax `:paramName` or `{paramName}`
 
@@ -84,7 +87,7 @@ export default (fastifyInstance) => ({
 })
 ```
 
-## :arrow_forward: Route module description
+## :arrow_forward: Route module definition
 
 Method specification is available here: [Method specification](https://www.fastify.io/docs/latest/Routes/#full-declaration)
 
