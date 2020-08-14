@@ -53,6 +53,7 @@ Typescript:
 ```typescript
 //file: ./routes/index.js
 //url: http://your-host
+
 import { FastifyInstance } from 'fastify'
 import { Resource } from 'fastify-autoroutes'
 
