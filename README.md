@@ -18,9 +18,9 @@
 
 > :star: Thanks to everyone who has starred the project, it means a lot!
 
-Automatic add routes based on file system hierarchy.
+Plugin to handle routes in fastify automatically based on directory structure.
 
-**[Full Documentation](https://giovannicardamone.github.io/fastify-autoroutes/)**
+## :newspaper: **[Full Documentation](https://giovannicardamone.github.io/fastify-autoroutes/)**
 
 ## :rocket: Install
 
@@ -29,6 +29,8 @@ npm install --save fastify-autoroutes
 ```
 
 ## :blue_book: Usage
+
+register plugin
 
 ```js
 const fastify = require('fastify')
@@ -39,24 +41,35 @@ server.register(require('fastify-autoroutes'), {
 })
 ```
 
+create file in autoroutes directory
+
 ```js
-//file: `<autoroutes-directory>/some/route/index.js`
-//mapped to: `<your host>/some/route`
+//file: `<autoroutes-directory>/some/route.js`
+//url:  `http://your-host/some/route`
 
 export default (fastifyInstance) => ({
   get: {
-    // any of routes option allowed by fastify: https://www.fastify.io/docs/latest/Routes/#routes-option
-    // except for `url` and `method`
-
-    handler: (request, reply) => {
-      reply.send('hello index route')
-    }
+    handler: async (request, reply) => 'Hello, Route'
   },
-  // other available methods are following: ['delete', 'get', 'head', 'patch', 'post', 'put', 'options']
 })
 ```
 
-> :information_source: use syntax `:paramName` or `{paramName}` in file name to specify url parameters
+using typescript support for module
+
+```typescript
+import { FastifyInstance } from 'fastify'
+import { Resource } from 'fastify-autoroutes'
+
+export default (fastify: FastifyInstance) => <Resource> {
+  get: {
+    handler: async (request: FastifyRequest, reply: FastifyReply) => 'Hello, Route!'
+  }
+}
+```
+
+allow params in autoroutes
+
+> :information_source: file/directory name must follow syntax `:paramName` or `{paramName}`
 
 ```js
 //file: `<autoroutes-directory>/users/{userId}/photos.js`
@@ -71,7 +84,11 @@ export default (fastifyInstance) => ({
 })
 ```
 
-## :arrow_forward: Accepted methods in module
+## :arrow_forward: Route module description
+
+Method specification is available here: [Method specification](https://www.fastify.io/docs/latest/Routes/#full-declaration)
+
+Allowed attributes mapped to Http methods in module:
 
 - delete
 - get
@@ -81,23 +98,23 @@ export default (fastifyInstance) => ({
 - put
 - options
 
-## :arrow_forward: Url parameters using path name
-
-to use url parameters in your route use `{parmName}` in your file or directory, it will be automatically changed to fastify parameter
-
-## :arrow_forward: Skip files in autoroutes directory
+## :arrow_forward: Skipping files
 
 to skip file in routes directory, prepend the `.` or `_` charater to filename
 
 examples:
 
-- `.skipped_directory`
-- `_also_skipped_directory`
-- `.skipped_file.js`
-- `.skipped_file.ts`
-- `_also_skipped_file.js`
-- `_also_skipped_file.ts`
-
+```text
+routes
+├── .ignored-directory
+├── _ignored-directory
+├── .ignored-js-file.js
+├── _ignored-js-file.js
+├── .ignored-ts-file.ts
+├── _ignored-ts-file.ts
+├── ignored-js-test.test.js
+└── ignored-ts-test.test.ts
+```
 > :warning: also any `*.test.js` and `*.test.ts` are skipped!
 
 this is useful if you want to have a lib file containts functions that don't have to be a route, so just create the file with `_` prepending character
@@ -124,4 +141,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification.
+
+Contributions of any kind welcome!

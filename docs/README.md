@@ -207,7 +207,7 @@ export default (fastifyInstance) => ({
 
 ### Route definition
 
-Each route should be complaint to fastify route: [DECLARATION](https://www.fastify.io/docs/latest/Routes/#full-declaration)
+Each route should be complaint to fastify route: [Method Specification](https://www.fastify.io/docs/latest/Routes/#full-declaration)
 
 the only exceptions is for `url` and `method` which are automatically mapped by project structure.
 
