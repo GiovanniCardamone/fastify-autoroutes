@@ -1,6 +1,6 @@
 {
     "name": "fastify-autoroutes",
-    "version": "1.0.11",
+    "version": "1.0.12",
     "description": "Map directory structure to routes",
     "main": "dist/index.js",
     "scripts": {
@@ -12,7 +12,8 @@
         "test:watch": "nodemon --exec 'npm run tap'",
         "coverage": "tap --cov --coverage-report=lcovonly",
         "coverage:show": "tap --cov --coverage-report=html tests",
-        "deploy": "npm run test && npm publish"
+        "deploy": "npm run test && npm publish",
+        "docs:watch": "docsify serve ./docs"
     },
     "repository": {
         "type": "git",
@@ -20,7 +21,11 @@
     },
     "keywords": [
         "fastify",
-        "fastify-plugin"
+        "fastify-plugin",
+        "fastify-autoroutes",
+        "autoroute",
+        "autorouting",
+        "autoroutes"
     ],
     "author": "Giovanni Cardamone",
     "license": "MIT",
@@ -31,9 +36,9 @@
     "devDependencies": {
         "@types/node": "^14.0.27",
         "@types/tap": "^14.10.0",
-        "codecov": "^3.7.2",
         "coveralls": "^3.1.0",
         "cross-env": "^7.0.2",
+        "docsify": "^4.11.4",
         "eslint": "^7.6.0",
         "fastify": "^3.1.1",
         "nodemon": "^2.0.4",
@@ -43,5 +48,16 @@
     "dependencies": {
         "fastify-plugin": "^2.1.1"
     },
-    "contributors": []
+    "contributors": [
+        {
+            "name": "Giovanni Cardamone",
+            "email": "g.cardamone2@gmail.com",
+            "url": "https://giovannicardamone.github.io"
+        },
+        {
+            "name": "Gennaro Bosone",
+            "email": "gennaro.bs@gmail.com",
+            "url": "https://www.desidus.it"
+        }
+    ]
 }
