@@ -6,6 +6,7 @@ docs
 examples
 src
 tests
+.all-contributorsrc
 .editorconfig
 .env
 .prettierignore
