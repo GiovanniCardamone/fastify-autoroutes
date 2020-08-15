@@ -22,6 +22,8 @@ Plugin to handle routes in fastify automatically based on directory structure.
 
 ## :newspaper: **[Full Documentation](https://giovannicardamone.github.io/fastify-autoroutes/)**
 
+[fastify-autoroutes](https://giovannicardamone.github.io/fastify-autoroutes/)
+
 ## :rocket: Install
 
 ```sh
