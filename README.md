@@ -12,7 +12,7 @@
 [![GitHub license](https://img.shields.io/github/license/GiovanniCardamone/fastify-autoroutes.svg)](https://github.com/GiovanniCardamone/fastify-autoroutes/blob/master/LICENSE)
 
 ![CI](https://github.com/GiovanniCardamone/fastify-autoroutes/workflows/CI/badge.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/GiovanniCardamone/fastify-autoroutes/badge.svg?branch=dev)](https://coveralls.io/github/GiovanniCardamone/fastify-autoroutes?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/GiovanniCardamone/fastify-autoroutes/badge.svg?branch=master)](https://coveralls.io/github/GiovanniCardamone/fastify-autoroutes?branch=master)
 
 </div>
 
