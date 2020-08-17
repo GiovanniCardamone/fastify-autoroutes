@@ -1,8 +1,9 @@
-const fastify = require('fastify')
+import fastify from 'fastify'
+import autoroutes from 'fastify-autoroutes'
 
 const server = fastify()
 
-server.register(require('../../dist/index.js'), {
+server.register(autoroutes, {
   dir: './routes',
 })
 
