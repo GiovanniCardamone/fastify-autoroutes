@@ -1,5 +1,3 @@
-import fastify, { FastifyInstance } from 'fastify'
-
 export default (fastify) => {
   return {
     get: {
