@@ -1,9 +1,9 @@
 import fastify from 'fastify'
-import fastifyAutoroutes from '../../dist/index'
+import autoroutes from 'fastify-autoroutes'
 
 const server = fastify()
 
-server.register(fastifyAutoroutes, {
+server.register(autoroutes, {
   dir: './routes',
 })
 
