@@ -1,6 +1,8 @@
 import fastifyPlugin from 'fastify-plugin'
 import { FastifyInstance, RouteOptions } from 'fastify'
 
+import { JsonSchema } from 'type-jsonschema'
+
 import process from 'process'
 import path from 'path'
 import fs from 'fs'
@@ -36,6 +38,33 @@ export type PostRoute = AnyRoute
 export type PutRoute = AnyRoute
 export type OptionsRoute = AnyRoute
 
+interface Response<> {
+  description: string
+  content: {
+    'application/json': {
+      schema: JsonSchema
+    }
+  }
+}
+
+interface StrictAnyRoute extends AnyRoute {
+  schema: {
+    body?: JsonSchema
+    querystring?: JsonSchema
+    params?: JsonSchema
+    headers?: JsonSchema
+    response?: { [key: number]: Response }
+  }
+}
+
+export type StrictDeleteRoute = StrictAnyRoute
+export type StrictGetRoute = Omit<StrictAnyRoute, 'body'>
+export type StrictHeadRoute = StrictAnyRoute
+export type StrictPatchRoute = StrictAnyRoute
+export type StrictPostRoute = StrictAnyRoute
+export type StrictPutRoute = StrictAnyRoute
+export type StrictOptionsRoute = StrictAnyRoute
+
 export interface Resource {
   delete?: DeleteRoute
   get?: GetRoute
@@ -44,6 +73,16 @@ export interface Resource {
   post?: PostRoute
   put?: PutRoute
   options?: OptionsRoute
+}
+
+export interface StrictResource {
+  delete?: StrictDeleteRoute
+  get?: StrictGetRoute
+  head?: StrictHeadRoute
+  patch?: StrictPatchRoute
+  post?: StrictPostRoute
+  put?: StrictPutRoute
+  options?: StrictOptionsRoute
 }
 
 interface FastifyAutoroutesOptions {
@@ -151,7 +190,7 @@ function loadModule(path: string, log: boolean) {
 }
 
 export default fastifyPlugin<FastifyAutoroutesOptions>(
-  (fastify, options, next) => {
+  (fastify: any, options: any, next: any) => {
     const log = options.log ?? true
 
     if (!options.dir) {
