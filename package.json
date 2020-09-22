@@ -47,7 +47,7 @@
     },
     "dependencies": {
         "fastify-plugin": "^2.1.1",
-        "type-jsonschema": "0.0.5"
+        "type-jsonschema": "0.0.6"
     },
     "contributors": [
         {
