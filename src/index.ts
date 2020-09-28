@@ -47,8 +47,17 @@ interface Response<> {
   }
 }
 
+interface Security {
+  [key: string]: []
+}
+
 interface StrictAnyRoute extends AnyRoute {
   schema: {
+    summary?: string
+    description?: string
+    security?: Security[]
+    tags?: string[]
+
     body?: JsonSchema
     querystring?: JsonSchema
     params?: JsonSchema
