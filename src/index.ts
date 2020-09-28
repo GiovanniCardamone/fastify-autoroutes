@@ -1,7 +1,7 @@
 import fastifyPlugin from 'fastify-plugin'
 import { FastifyInstance, RouteOptions } from 'fastify'
 
-import { JsonSchema } from 'type-jsonschema'
+import { JsonSchema, JsonSchemaProperty } from 'type-jsonschema'
 
 import process from 'process'
 import path from 'path'
@@ -58,10 +58,10 @@ interface StrictAnyRoute extends AnyRoute {
     security?: Security[]
     tags?: string[]
 
-    body?: JsonSchema
-    querystring?: JsonSchema
-    params?: JsonSchema
-    headers?: JsonSchema
+    body?: JsonSchemaProperty
+    querystring?: JsonSchemaProperty
+    params?: JsonSchemaProperty
+    headers?: JsonSchemaProperty
     response?: { [key: number]: Response }
   }
 }
