@@ -46,7 +46,7 @@
         "typescript": "^4.0.2"
     },
     "dependencies": {
-        "fastify-plugin": "^2.1.1",
+        "fastify-plugin": "^3.0.0",
         "type-jsonschema": "0.0.9"
     },
     "contributors": [
