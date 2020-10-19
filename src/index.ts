@@ -113,8 +113,10 @@ function scan(
   const combinedStat = fs.statSync(combined)
 
   if (combinedStat.isDirectory()) {
-    for (const entry of fs.readdirSync(combined)) {
-      scan(fastify, baseDir, path.join(current, entry), log)
+    if (!path.basename(current).startsWith('_')) {
+      for (const entry of fs.readdirSync(combined)) {
+        scan(fastify, baseDir, path.join(current, entry), log)
+      }
     }
   } else if (isAcceptableFile(combined, combinedStat)) {
     autoload(fastify, combined, pathToUrl(current), log)
