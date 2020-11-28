@@ -52,7 +52,7 @@ interface Response<> {
 }
 
 interface Security {
-  [key: string]: []
+  [key: string]: string[]
 }
 
 interface StrictAnyRoute extends AnyRoute {
