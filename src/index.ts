@@ -46,24 +46,6 @@ interface Security {
   [key: string]: string[]
 }
 
-export type ParameterType = 'string' | 'number'
-
-export interface Parameter {
-  in: 'query' | 'path'
-  name: string
-  type: ParameterType
-  required: boolean
-  description?: string
-}
-
-export interface QueryParameter {
-  in: 'query'
-}
-
-export interface PathParameter {
-  in: 'path'
-}
-
 interface StrictAnyRoute extends AnyRoute {
   schema: {
     summary?: string
@@ -72,7 +54,7 @@ interface StrictAnyRoute extends AnyRoute {
     tags?: string[]
 
     body?: JsonSchemaProperty
-    querystring?: QueryParameter[]
+    querystring?: ObjectJsonSchemaProperty['properties']
     params?: ObjectJsonSchemaProperty['properties']
     headers?: JsonSchemaProperty
     response?: { [key: number]: JsonSchemaProperty }
