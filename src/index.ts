@@ -42,15 +42,6 @@ export type PostRoute = AnyRoute
 export type PutRoute = AnyRoute
 export type OptionsRoute = AnyRoute
 
-interface Response<> {
-  description: string
-  content: {
-    'application/json': {
-      schema: JsonSchema
-    }
-  }
-}
-
 interface Security {
   [key: string]: string[]
 }
@@ -63,7 +54,7 @@ interface StrictAnyRoute extends AnyRoute {
     tags?: string[]
 
     body?: JsonSchemaProperty
-    querystring?: ObjectJsonSchemaProperty['properties']
+    querystring?: JsonSchemaProperty
     params?: ObjectJsonSchemaProperty['properties']
     headers?: JsonSchemaProperty
     response?: { [key: number]: JsonSchemaProperty }
