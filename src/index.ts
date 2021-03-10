@@ -54,8 +54,8 @@ interface StrictAnyRoute extends AnyRoute {
     tags?: string[]
 
     body?: JsonSchemaProperty
-    querystring?: ObjectJsonSchemaProperty
-    params?: ObjectJsonSchemaProperty
+    querystring?: JsonSchemaProperty
+    params?: ObjectJsonSchemaProperty['properties']
     headers?: JsonSchemaProperty
     response?: { [key: number]: JsonSchemaProperty }
   }
