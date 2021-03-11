@@ -52,7 +52,8 @@ interface StrictAnyRoute extends AnyRoute {
     description?: string
     security?: Security[]
     tags?: string[]
-
+    consumes?: string[]
+    produces?: string[]
     body?: JsonSchemaProperty
     querystring?: JsonSchemaProperty
     params?: ObjectJsonSchemaProperty['properties']
