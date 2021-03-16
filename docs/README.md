@@ -87,7 +87,7 @@ Autoroutes directory scenario:
         └── world.js  => http://your-host/hello/world
 ```
 
-in this case, the plugin will recursivley scan any routes in directory and map it urls
+in this case, the plugin will recursively scan any routes in directory and map it urls
 
 > :warning: those two directory structure are **NOT** equivalent:
 >
@@ -111,7 +111,7 @@ in this case, the plugin will recursivley scan any routes in directory and map i
 to ignore routes there are few way:
 
 - prepend '.' character to your file/directory name
-- prepend '_' characher to your file/directory name
+- prepend '_' character to your file/directory name
 
 > :information_source: files `*.test.js` and `*.test.ts` are automatically ignored
 
@@ -208,7 +208,7 @@ export default (fastifyInstance) => ({
 
 ### Route definition
 
-Each route should be complaint to fastify route: [Method Specification](https://www.fastify.io/docs/latest/Routes/#full-declaration)
+Each route should be compliant to fastify route: [Method Specification](https://www.fastify.io/docs/latest/Routes/#full-declaration)
 
 the only exceptions is for `url` and `method` which are automatically mapped by project structure.
 
