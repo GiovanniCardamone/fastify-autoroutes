@@ -107,7 +107,7 @@ Allowed attributes mapped to Http methods in module:
 
 ## :arrow_forward: Skipping files
 
-to skip file in routes directory, prepend the `.` or `_` charater to filename
+to skip file in routes directory, prepend the `.` or `_` character to filename
 
 examples:
 
@@ -124,7 +124,7 @@ routes
 ```
 > :warning: also any `*.test.js` and `*.test.ts` are skipped!
 
-this is useful if you want to have a lib file containts functions that don't have to be a route, so just create the file with `_` prepending character
+this is useful if you want to have a lib file which contains functions that don't have to be a route, so just create the file with `_` prepending character
 
 ## :page_facing_up: License
 
