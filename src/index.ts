@@ -1,17 +1,11 @@
-import fastifyPlugin from 'fastify-plugin'
 import { FastifyInstance, RouteOptions } from 'fastify'
-
-import {
-  JsonSchema,
-  JsonSchemaProperty,
-  ObjectJsonSchemaProperty,
-} from 'type-jsonschema'
-
-import process from 'process'
-import path from 'path'
+import fastifyPlugin from 'fastify-plugin'
 import fs from 'fs'
+import path from 'path'
+import process from 'process'
+import { JsonSchemaProperty, ObjectJsonSchemaProperty } from 'type-jsonschema'
 
-export const errorLabel = '[ERROR] fastify-autoload:'
+export const errorLabel = '[ERROR] fastify-autoroutes:'
 
 export type ValidMethods =
   | 'DELETE'
@@ -99,7 +93,7 @@ function scan(
   fastify: FastifyInstance,
   baseDir: string,
   current: string,
-  log: boolean = false
+  log: boolean = false,
 ) {
   const combined = path.join(baseDir, current)
   const combinedStat = fs.statSync(combined)
@@ -156,13 +150,13 @@ function autoload(
   fastify: FastifyInstance,
   fullPath: string,
   url: string,
-  log: boolean
+  log: boolean,
 ) {
   const module = loadModule(fullPath, log)
 
   if (typeof module !== 'function') {
     throw new Error(
-      `${errorLabel} module ${fullPath} must be valid js/ts module and should export route methods definitions`
+      `${errorLabel} module ${fullPath} must be valid js/ts module and should export route methods definitions`,
     )
   }
 
@@ -240,7 +234,7 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
 
     try {
       scan(fastify, dirPath, '', options.log)
-    } catch (error) {
+    } catch (error: any) {
       log && console.error(error.message)
 
       return next(error)
@@ -251,5 +245,5 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
   {
     fastify: '>=3.0.0',
     name: 'fastify-autoroutes',
-  }
+  },
 )

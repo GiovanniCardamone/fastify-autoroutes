@@ -60,3 +60,5 @@ typings/
 package-lock.json
 
 dist
+
+.idea
