@@ -77,7 +77,7 @@ tap.test('simple index', { saveFixture: false }, (t) => {
       t.is(err, null)
       t.is(res.payload, 'get')
       t.end()
-    }
+    },
   )
 })
 
@@ -103,7 +103,7 @@ tap.test('nested routes', { saveFixture: false }, (t) => {
       t.is(err, null)
       t.is(res.payload, 'get')
       t.end()
-    }
+    },
   )
 })
 
@@ -131,7 +131,7 @@ tap.test('nested routes with trailing slashes', { saveFixture: false }, (t) => {
       t.is(err, null)
       t.is(res.payload, 'get')
       t.end()
-    }
+    },
   )
 })
 
@@ -159,7 +159,7 @@ tap.test('nested routes with url parameter', { saveFixture: false }, (t) => {
       t.is(err, null)
       t.is(res.payload, userId)
       t.end()
-    }
+    },
   )
 })
 
@@ -205,12 +205,12 @@ tap.test(
               t.is(err, null)
               t.is(JSON.parse(res.payload).USERID, USERID)
               t.end()
-            }
+            },
           )
-        }
+        },
       )
     }
-  }
+  },
 )
 
 tap.test(
@@ -242,9 +242,46 @@ tap.test(
         t.is(err, null)
         t.is(res.payload, userId)
         t.end()
-      }
+      },
     )
-  }
+  },
+)
+
+tap.test(
+  'nested routes with url 2 parameters',
+  { saveFixture: false },
+  (t) => {
+    const server = fastify()
+
+    const dir = t.testdir({
+      users: {
+        '{userId}-{userName}': {
+          'foo': exampleGetRouteJSONParam,
+        },
+      },
+    })
+
+    server.register(autoroutes, {
+      dir: dir,
+    })
+
+    const userId = 'foo'
+    const userName = 'bar'
+
+    server.inject(
+      {
+        method: 'GET',
+        url: `/users/${userId}-${userName}/foo`,
+      },
+      (err, res) => {
+        const payload = JSON.parse(res.payload)
+        t.is(err, null)
+        t.is(payload.userId, userId)
+        // t.is(payload.userName, userName)
+        t.end()
+      },
+    )
+  },
 )
 
 tap.test('example es6 exports default module', { saveFixture: false }, (t) => {
@@ -267,7 +304,7 @@ tap.test('example es6 exports default module', { saveFixture: false }, (t) => {
       t.is(err, null)
       t.is(res.payload, 'get')
       t.end()
-    }
+    },
   )
 })
 
@@ -302,11 +339,11 @@ tap.test(
             t.is(res.statusCode, 404)
 
             t.end()
-          }
+          },
         )
-      }
+      },
     )
-  }
+  },
 )
 
 tap.test(
@@ -340,11 +377,11 @@ tap.test(
           (err, res) => {
             t.is(res.statusCode, 404)
             t.end()
-          }
+          },
         )
-      }
+      },
     )
-  }
+  },
 )
 
 tap.test(
@@ -379,9 +416,9 @@ tap.test(
           (err, res) => {
             t.is(res.statusCode, 404)
             t.end()
-          }
+          },
         )
-      }
+      },
     )
-  }
+  },
 )
