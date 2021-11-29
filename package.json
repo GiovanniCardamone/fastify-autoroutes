@@ -43,7 +43,7 @@
         "fastify": "^3.20.1",
         "glob-promise": "^4.2.0",
         "nodemon": "^2.0.4",
-        "tap": "^14.10.8",
+        "tap": "^15.1.5",
         "typescript": "^4.0.2"
     },
     "dependencies": {
