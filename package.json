@@ -34,7 +34,7 @@
     },
     "homepage": "https://github.com/GiovanniCardamone/fastify-autoroutes#readme",
     "devDependencies": {
-        "@types/node": "^14.14.6",
+        "@types/node": "^17.0.1",
         "@types/tap": "^14.10.0",
         "coveralls": "^3.1.0",
         "cross-env": "^7.0.2",
