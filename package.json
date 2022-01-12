@@ -42,7 +42,7 @@
         "cross-env": "^7.0.2",
         "docsify": "^4.11.4",
         "eslint": "^7.6.0",
-        "fastify": "3.17.0",
+        "fastify": "3.25.3",
         "glob-promise": "^4.2.0",
         "mocha": "^8.4.0",
         "nodemon": "^2.0.4",
