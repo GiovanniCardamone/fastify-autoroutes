@@ -49,7 +49,7 @@ jobs:
               run: |
                   npm run coverage
 
-            - name: Deploy Coveralls
-              uses: coverallsapp/github-action@master
-              with:
-                  github-token: ${{ secrets.GITHUB_TOKEN }}
+            # - name: Deploy Coveralls
+            #   uses: coverallsapp/github-action@master
+            #   with:
+            #       github-token: ${{ secrets.GITHUB_TOKEN }}
