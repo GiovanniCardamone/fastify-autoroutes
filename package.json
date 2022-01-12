@@ -13,7 +13,8 @@
         "coverage": "tap --cov --coverage-report=lcovonly",
         "coverage:show": "tap --cov --coverage-report=html tests",
         "deploy": "npm run test && npm publish",
-        "docs:watch": "docsify serve ./docs"
+        "docs:watch": "docsify serve ./docs",
+        "test:bin": "ts-mocha tests/bin/**.test.ts"
     },
     "repository": {
         "type": "git",
@@ -34,21 +35,33 @@
     },
     "homepage": "https://github.com/GiovanniCardamone/fastify-autoroutes#readme",
     "devDependencies": {
+        "@types/chai": "^4.2.21",
+        "@types/mocha": "^9.0.0",
         "@types/node": "^14.14.6",
+        "@types/pluralize": "^0.0.29",
         "@types/tap": "^14.10.0",
+        "@types/yargs": "^17.0.2",
+        "chai": "^4.3.4",
         "coveralls": "^3.1.0",
         "cross-env": "^7.0.2",
         "docsify": "^4.11.4",
         "eslint": "^7.6.0",
-        "fastify": "^3.20.1",
+        "fastify": "3.17.0",
         "glob-promise": "^4.2.0",
+        "mocha": "^8.4.0",
         "nodemon": "^2.0.4",
         "tap": "^14.10.8",
+        "ts-mocha": "^8.0.0",
         "typescript": "^4.0.2"
     },
     "dependencies": {
         "fastify-plugin": "^3.0.0",
-        "type-jsonschema": "0.0.9"
+        "json5": "^2.2.0",
+        "pluralize": "^8.0.0",
+        "yargs": "^13.3.2"
+    },
+    "peerDependencies": {
+        "fastify": "^3.17.0"
     },
     "contributors": [
         {

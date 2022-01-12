@@ -1,17 +1,12 @@
 import fastifyPlugin from 'fastify-plugin'
-import { FastifyInstance, RouteOptions } from 'fastify'
-
-import {
-  JsonSchema,
-  JsonSchemaProperty,
-  ObjectJsonSchemaProperty,
-} from 'type-jsonschema'
+import type { FastifyInstance, FastifyRequest, RouteOptions } from 'fastify'
+import glob from 'glob-promise'
 
 import process from 'process'
 import path from 'path'
 import fs from 'fs'
 
-export const errorLabel = '[ERROR] fastify-autoload:'
+export const ERROR_LABEL = 'fastify-autoload'
 
 export type ValidMethods =
   | 'DELETE'
@@ -54,11 +49,11 @@ interface StrictAnyRoute extends AnyRoute {
     tags?: string[]
     consumes?: string[]
     produces?: string[]
-    body?: JsonSchemaProperty
-    querystring?: JsonSchemaProperty
-    params?: ObjectJsonSchemaProperty['properties']
-    headers?: JsonSchemaProperty
-    response?: { [key: number]: JsonSchemaProperty }
+    body?: any
+    querystring?: any
+    params?: any
+    headers?: any
+    response?: { [key: number]: any }
   }
 }
 
@@ -91,161 +86,67 @@ export interface StrictResource {
 }
 
 interface FastifyAutoroutesOptions {
-  dir: string
-  log?: boolean
-}
-
-function scan(
-  fastify: FastifyInstance,
-  baseDir: string,
-  current: string,
-  log: boolean = false
-) {
-  const combined = path.join(baseDir, current)
-  const combinedStat = fs.statSync(combined)
-
-  if (combinedStat.isDirectory()) {
-    if (!path.basename(current).startsWith('_')) {
-      for (const entry of fs.readdirSync(combined)) {
-        scan(fastify, baseDir, path.join(current, entry), log)
-      }
-    }
-  } else if (isAcceptableFile(combined, combinedStat)) {
-    autoload(fastify, combined, pathToUrl(current), log)
-  }
-}
-
-function isAcceptableFile(file: string, stat: fs.Stats): boolean {
-  return (
-    !path.basename(file).startsWith('.') &&
-    !path.basename(file).startsWith('_') &&
-    !file.endsWith('.map') &&
-    !file.endsWith('.test.js') &&
-    !file.endsWith('.test.ts') &&
-    stat.isFile()
-  )
-}
-
-function pathToUrl(filePath: string) {
-  let url =
-    '/' + filePath.replace('.ts', '').replace('.js', '').replace('index', '')
-
-  if (url.length === 1) return url
-
-  return url
-    .split(path.sep)
-    .map((part) => replaceParamsToken(part))
-    .join('/')
-}
-
-function replaceParamsToken(token: string) {
-  const regex = /{.+}/g
-
-  let result
-  while ((result = regex.exec(token)) !== null) {
-    token =
-      token.substring(0, result.index) +
-      result[0].replace('{', ':').replace('}', '') +
-      token.substr(result.index + result[0].length)
-  }
-
-  return token
-}
-
-function autoload(
-  fastify: FastifyInstance,
-  fullPath: string,
-  url: string,
-  log: boolean
-) {
-  const module = loadModule(fullPath, log)
-
-  if (typeof module !== 'function') {
-    throw new Error(
-      `${errorLabel} module ${fullPath} must be valid js/ts module and should export route methods definitions`
-    )
-  }
-
-  const routes = module(fastify)
-
-  for (const [method, route] of Object.entries<RouteOptions>(routes)) {
-    if (validMethods.includes(method)) {
-      route.url = url
-      route.method = method.toUpperCase() as ValidMethods
-
-      fastify.route(route)
-
-      if (log) {
-        console.info(`${method.toUpperCase()} ${url} => ${fullPath}`)
-      }
-    }
-  }
-}
-
-function loadModule(path: string, log: boolean) {
-  const module = require(path)
-
-  if (typeof module === 'function') {
-    return module
-  }
-
-  if (typeof module === 'object' && 'default' in module) {
-    return module.default
-  }
-
-  return
+  dir?: string
 }
 
 export default fastifyPlugin<FastifyAutoroutesOptions>(
-  (fastify: any, options: any, next: any) => {
-    const log = options.log ?? true
-
-    if (!options.dir) {
-      const message = `${errorLabel} dir must be specified`
-      log && console.error(message)
-
-      return next(new Error(message))
-    }
-
-    if (typeof options.dir !== 'string') {
-      const message = `${errorLabel} dir must be the path of autoroutes-directory`
-      log && console.error(message)
-
-      return next(new Error(message))
-    }
+  async (
+    fastify: FastifyInstance,
+    options: FastifyAutoroutesOptions,
+    next: CallableFunction
+  ) => {
+    const { dir: dir } = { ...options, dir: options.dir || './routes' }
 
     let dirPath: string
 
-    if (path.isAbsolute(options.dir)) {
-      dirPath = options.dir
+    if (path.isAbsolute(dir)) {
+      dirPath = dir
     } else if (path.isAbsolute(process.argv[1])) {
-      dirPath = path.join(process.argv[1], '..', options.dir)
+      dirPath = path.join(process.argv[1], dir)
     } else {
-      dirPath = path.join(process.cwd(), process.argv[1], '..', options.dir)
+      dirPath = path.join(process.cwd(), process.argv[1], dir)
     }
 
     if (!fs.existsSync(dirPath)) {
-      const message = `${errorLabel} dir ${dirPath} does not exists`
-      log && console.error(message)
-
-      return next(new Error(message))
+      return next(new Error(`${ERROR_LABEL} dir ${dirPath} does not exists`))
     }
 
     if (!fs.statSync(dirPath).isDirectory()) {
-      const message = `${errorLabel} dir ${dirPath} must be a directory`
-      log && console.error(message)
-
-      return next(new Error(message))
+      return next(
+        new Error(`${ERROR_LABEL} dir ${dirPath} must be a directory`)
+      )
     }
 
-    try {
-      scan(fastify, dirPath, '', options.log)
-    } catch (error) {
-      log && console.error(error.message)
+    const routes = await glob(`${dirPath}/**/[!.]*.{ts,js}`)
+    const routesModules: Record<string, StrictResource> = {}
 
-      return next(error)
-    } finally {
-      return next()
+    // console.log({ routes })
+
+    for (const route of routes) {
+      let routeName = route
+        .replace(dirPath, '')
+        .replace('.js', '')
+        .replace('.ts', '')
+        .replace('index', '')
+        .split('/')
+        .map((part) => part.replace(/{(.+)}/g, ':$1'))
+        .join('/')
+
+      routeName = !routeName ? '/' : routeName
+
+      // console.log({ routeName })
+
+      routesModules[routeName] = loadModule(routeName, route)(fastify)
+    }
+
+    for (const [url, module] of Object.entries(routesModules)) {
+      for (const [method, options] of Object.entries(module)) {
+        fastify.route({
+          method: method.toUpperCase(),
+          url: url.toLowerCase(),
+          ...options,
+        })
+      }
     }
   },
   {
@@ -253,3 +154,26 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
     name: 'fastify-autoroutes',
   }
 )
+
+function loadModule(
+  name: string,
+  path: string
+): (instance: FastifyInstance) => StrictResource {
+  const module = require(path)
+
+  if (typeof module === 'function') {
+    return module as (instance: any) => StrictResource
+  }
+
+  if (
+    typeof module === 'object' &&
+    'default' in module &&
+    typeof module.default === 'function'
+  ) {
+    return module.default as (instance: any) => StrictResource
+  }
+
+  throw new Error(
+    `${ERROR_LABEL}: invalid route module definition (${name}) ${path}. Must export a function`
+  )
+}
