@@ -58,7 +58,7 @@
         "fastify-plugin": "^3.0.0",
         "json5": "^2.2.0",
         "pluralize": "^8.0.0",
-        "yargs": "^13.3.2"
+        "yargs": "^15.0.1"
     },
     "peerDependencies": {
         "fastify": "^3.17.0"
