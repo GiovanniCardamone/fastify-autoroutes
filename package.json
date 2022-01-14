@@ -44,7 +44,7 @@
         "eslint": "^7.6.0",
         "fastify": "3.17.0",
         "glob-promise": "^4.2.0",
-        "mocha": "^8.4.0",
+        "mocha": "^9.1.4",
         "nodemon": "^2.0.4",
         "tap": "^14.10.8",
         "ts-mocha": "^8.0.0",
