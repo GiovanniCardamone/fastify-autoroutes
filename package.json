@@ -41,7 +41,7 @@
         "coveralls": "^3.1.0",
         "cross-env": "^7.0.2",
         "docsify": "^4.11.4",
-        "eslint": "^7.6.0",
+        "eslint": "^8.7.0",
         "fastify": "3.17.0",
         "glob-promise": "^4.2.0",
         "mocha": "^8.4.0",
