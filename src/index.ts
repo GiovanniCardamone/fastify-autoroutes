@@ -143,7 +143,7 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
       for (const [method, options] of Object.entries(module)) {
         fastify.route({
           method: method.toUpperCase(),
-          url: url.toLowerCase(),
+          url: url,
           ...options,
         })
       }
