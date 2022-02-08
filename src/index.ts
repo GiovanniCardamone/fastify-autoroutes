@@ -87,6 +87,7 @@ export interface StrictResource {
 
 interface FastifyAutoroutesOptions {
   dir?: string
+  prefix?: string
 }
 
 export default fastifyPlugin<FastifyAutoroutesOptions>(
@@ -95,7 +96,7 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
     options: FastifyAutoroutesOptions,
     next: CallableFunction
   ) => {
-    const { dir: dir } = { ...options, dir: options.dir || './routes' }
+    const { dir, prefix: routePrefix } = { ...options, dir: options.dir || './routes', prefix: options.prefix || ''}
 
     let dirPath: string
 
@@ -132,7 +133,7 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
         .map((part) => part.replace(/{(.+)}/g, ':$1'))
         .join('/')
 
-      routeName = !routeName ? '/' : routeName
+      routeName = !routeName ? '/' : `${routePrefix}${routeName}`
 
       // console.log({ routeName })
 
