@@ -1,55 +1,81 @@
 name: CI
+
 on:
     push:
+        branches:
+            - main
         paths-ignore:
             - 'docs/**'
             - '*.md'
-    pull_request:
-        paths-ignore:
-            - 'docs/**'
-            - '*.md'
-
-env:
-    CI: true
 
 jobs:
-    test:
-        runs-on: ${{ matrix.os }}
-
-        strategy:
-            matrix:
-                node-version: [10.x, 12.x, 13.x, 14.x]
-                os: [ubuntu-latest, windows-latest, macOS-latest]
-
+    # build / test
+    Build:
+        name: Build Package
+        runs-on: ubuntu-latest
         steps:
+            # Checkout Repo
             - uses: actions/checkout@v2
 
-            - name: Use Node.js
-              uses: actions/setup-node@v1
+            # Setup Node
+            - uses: actions/setup-node@v2
               with:
-                  node-version: ${{ matrix.node-version }}
+                  node-version: 14
 
-            - name: Install
-              run: |
-                  npm i
+            # Install Dependencies
+            - run: npm ci
 
-            - name: Install Dev
-              run: |
-                  npm i -D
+            # Build Package
+            - run: npm run build
 
-            - name: Build
-              run: |
-                  npm run build
+            # Run Tests
+            - run: npm run test:coverage
 
-            - name: Run tests
-              run: |
-                  npm run test
+            # Report Coverage
+            - name: Coveralls GitHub Action
+              uses: coverallsapp/github-action@1.1.3
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
 
-            - name: Run Coverage
-              run: |
-                  npm run coverage
+    # create / release
+    Release:
+        needs: Build
+        name: Create Release Package
+        runs-on: ubuntu-latest
+        steps:
+            # Checkout Repo
+            - uses: actions/checkout@v2
 
-            # - name: Deploy Coveralls
-            #   uses: coverallsapp/github-action@master
-            #   with:
-            #       github-token: ${{ secrets.GITHUB_TOKEN }}
+            # Setup Node
+            - uses: actions/setup-node@v2
+              with:
+                  node-version: 14
+
+            # Show current package
+            - name: cat package.json
+              run: cat ./package.json
+
+            # Install Dependencies
+            - run: npm ci
+
+            # Build package
+            - run: npm run build
+
+            # Bump version, tag commit and generate a changelog
+            - name: Conventional Changelog Action
+              uses: TriPSs/conventional-changelog-action@v3
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  git-message: 'chore(release): {version}'
+                  tag-prefix: 'v'
+                  output-file: 'CHANGELOG.md'
+                  release-count: '10'
+                  skip-on-empty: 'false'
+                  skip-version-file: 'false'
+                  skip-commit: 'false'
+
+            # Publish to NPM
+            - name: Publish to NPM
+              uses: JS-DevTools/npm-publish@v1
+              with:
+                  token: ${{ secrets.NPM_TOKEN }}

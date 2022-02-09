@@ -6,7 +6,7 @@ import process from 'process'
 import path from 'path'
 import fs from 'fs'
 
-export const ERROR_LABEL = 'fastify-autoload'
+export const ERROR_LABEL = 'fastify-autoroutes'
 
 export type ValidMethods =
   | 'DELETE'
@@ -96,7 +96,11 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
     options: FastifyAutoroutesOptions,
     next: CallableFunction
   ) => {
-    const { dir, prefix: routePrefix } = { ...options, dir: options.dir || './routes', prefix: options.prefix || ''}
+    const { dir, prefix: routePrefix } = {
+      ...options,
+      dir: options.dir || './routes',
+      prefix: options.prefix || '',
+    }
 
     let dirPath: string
 

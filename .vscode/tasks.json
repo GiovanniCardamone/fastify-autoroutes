@@ -1,0 +1,33 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "f1",
+            "type": "npm",
+            "script": "build:watch",
+            "group": "build",
+            "problemMatcher": ["$tsc"]
+        },
+        {
+            "label": "f2",
+            "type": "npm",
+            "script": "test:watch",
+            "group": "test",
+            "problemMatcher": ["$tsc"]
+        },
+        {
+            "label": "f3",
+            "type": "npm",
+            "script": "build:watch",
+            "group": "build",
+            "problemMatcher": ["$tsc"]
+        },
+        {
+            "label": "f4",
+            "type": "npm",
+            "script": "test",
+            "group": "test",
+            "problemMatcher": ["$tsc"]
+        }
+    ]
+}
