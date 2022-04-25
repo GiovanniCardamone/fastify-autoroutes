@@ -148,8 +148,13 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
       routesModules[routeName] = loadModule(routeName, route)(fastify)
     }
 
-    for (const [url, module] of Object.entries(routesModules)) {
+    for (let [url, module] of Object.entries(routesModules)) {
       for (const [method, options] of Object.entries(module)) {
+        // If resource url ends with trailing /, remove it
+        if (url.endsWith('/') && url !== '/') { 
+          url = url.slice(0, -1)
+        }
+
         fastify.route({
           method: method.toUpperCase(),
           url: url,
