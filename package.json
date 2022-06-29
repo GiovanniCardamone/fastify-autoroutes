@@ -16,7 +16,8 @@
         "test:coverage": "exit 0",
         "docs": "docsify generate ./docs",
         "docs:watch": "docsify serve ./docs",
-        "prepare": "husky install"
+        "prepare": "husky install",
+        "prepublishOnly": "npm run build"
     },
     "repository": {
         "type": "git",
