@@ -51,7 +51,9 @@
         "cross-env": "^7.0.2",
         "docsify": "^4.11.4",
         "eslint": "^7.6.0",
-        "fastify": "3.17.0",
+        "fastify": "4.6.0",
+        "fastify-plugin": "4.2.1",
+        "@fastify/error": "^3.0.0",
         "husky": "^7.0.4",
         "mocha": "^9.2.0",
         "nodemon": "^2.0.4",
@@ -60,11 +62,11 @@
         "typescript": "^4.0.2"
     },
     "dependencies": {
-        "fastify-plugin": "^3.0.0",
+        "fastify-plugin": "^4.0.0",
         "glob-promise": "^4.2.2"
     },
     "peerDependencies": {
-        "fastify": "^3.17.0"
+        "fastify": "^4.0.0"
     },
     "files": [
         "dist"
