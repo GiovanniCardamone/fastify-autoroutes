@@ -1,10 +1,11 @@
+import createError from '@fastify/error'
+import type { FastifyInstance, RouteOptions } from 'fastify'
 import fastifyPlugin from 'fastify-plugin'
-import type { FastifyInstance, FastifyRequest, RouteOptions } from 'fastify'
-import glob from 'glob-promise'
-
-import process from 'process'
-import path from 'path'
 import fs from 'fs'
+import glob from 'glob-promise'
+import path from 'path'
+import process from 'process'
+
 
 export const ERROR_LABEL = 'fastify-autoroutes'
 
@@ -17,15 +18,15 @@ export type ValidMethods =
   | 'PUT'
   | 'OPTIONS'
 
-const validMethods = [
-  'delete',
-  'get',
-  'head',
-  'patch',
-  'post',
-  'put',
-  'options',
-]
+// const validMethods = [
+//   'delete',
+//   'get',
+//   'head',
+//   'patch',
+//   'post',
+//   'put',
+//   'options',
+// ]
 
 export type AnyRoute = Omit<RouteOptions, 'method' | 'url'>
 
@@ -113,21 +114,26 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
     }
 
     if (!fs.existsSync(dirPath)) {
-      return next(new Error(`${ERROR_LABEL} dir ${dirPath} does not exists`))
+      const CustomError = createError(
+        '1',
+        `${ERROR_LABEL} dir ${dirPath} must be a directory`
+      )
+      return next(new CustomError())
     }
 
     if (!fs.statSync(dirPath).isDirectory()) {
-      return next(
-        new Error(`${ERROR_LABEL} dir ${dirPath} must be a directory`)
+      const CustomError = createError(
+        '2',
+        `${ERROR_LABEL} dir ${dirPath} must be a directory`
       )
+      return next(new CustomError())
     }
 
-    let routes = await glob(`${dirPath}/**/[!._]*/[!._]*.{ts,js}`)
-    const routesModules: Record<string, StrictResource> = {}
-
     // glob returns ../../, but windows returns ..\..\
-    routes = routes.map((route) => path.normalize(route).replace(/\\/g, '/'))
     dirPath = path.normalize(dirPath).replace(/\\/g, '/')
+
+    const routes = await glob(`${dirPath}/**/[!._]*[!.test].{ts,js}`)
+    const routesModules: Record<string, StrictResource> = {}
 
     // console.log({ routes })
 
@@ -159,7 +165,7 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
     }
   },
   {
-    fastify: '>=3.0.0',
+    fastify: '>=4.0.0',
     name: 'fastify-autoroutes',
   }
 )
@@ -168,6 +174,7 @@ function loadModule(
   name: string,
   path: string
 ): (instance: FastifyInstance) => StrictResource {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const module = require(path)
 
   if (typeof module === 'function') {
