@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Logo](./logo.png)
+![Banner](./banner.png)
 
 ![JavaScript](https://img.shields.io/badge/ES6-Supported-yellow.svg?style=for-the-badge&logo=JavaScript) &nbsp; ![TypeScript](https://img.shields.io/badge/TypeScript-Supported-blue.svg?style=for-the-badge)
 
@@ -122,6 +122,7 @@ routes
 ├── ignored-js-test.test.js
 └── ignored-ts-test.test.ts
 ```
+
 > :warning: also any `*.test.js` and `*.test.ts` are skipped!
 
 this is useful if you want to have a lib file which contains functions that don't have to be a route, so just create the file with `_` prepending character

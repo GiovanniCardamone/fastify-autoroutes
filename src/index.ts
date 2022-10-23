@@ -1,11 +1,11 @@
-import fastifyPlugin from 'fastify-plugin'
-import type { FastifyInstance, FastifyRequest, RouteOptions } from 'fastify'
 import createError from '@fastify/error'
-import glob from 'glob-promise'
-
-import process from 'process'
-import path from 'path'
+import type { FastifyInstance, RouteOptions } from 'fastify'
+import fastifyPlugin from 'fastify-plugin'
 import fs from 'fs'
+import glob from 'glob-promise'
+import path from 'path'
+import process from 'process'
+
 
 export const ERROR_LABEL = 'fastify-autoroutes'
 
@@ -18,15 +18,15 @@ export type ValidMethods =
   | 'PUT'
   | 'OPTIONS'
 
-const validMethods = [
-  'delete',
-  'get',
-  'head',
-  'patch',
-  'post',
-  'put',
-  'options',
-]
+// const validMethods = [
+//   'delete',
+//   'get',
+//   'head',
+//   'patch',
+//   'post',
+//   'put',
+//   'options',
+// ]
 
 export type AnyRoute = Omit<RouteOptions, 'method' | 'url'>
 
@@ -174,6 +174,7 @@ function loadModule(
   name: string,
   path: string
 ): (instance: FastifyInstance) => StrictResource {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const module = require(path)
 
   if (typeof module === 'function') {

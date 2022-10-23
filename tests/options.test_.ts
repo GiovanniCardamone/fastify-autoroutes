@@ -1,11 +1,11 @@
-const tap = require('tap')
-
-const fastify = require('fastify')
-const autoroutes = require('../dist')
+import fastify from 'fastify'
+import autoroutes from '../src'
 
 const errorLabel = autoroutes.errorLabel
 
-tap.test('no dir parameters', (t) => {
+describe('Options', () =>{
+
+test('no dir parameters', (t) => {
   const server = fastify()
 
   server.register(autoroutes)
@@ -22,7 +22,7 @@ tap.test('no dir parameters', (t) => {
   )
 })
 
-tap.test('ivalid dir parameters', (t) => {
+test('ivalid dir parameters', async () => {
   const server = fastify()
 
   server.register(autoroutes, {
@@ -41,7 +41,7 @@ tap.test('ivalid dir parameters', (t) => {
   )
 })
 
-tap.test('dir does not exists', (t) => {
+test('dir does not exists', (t) => {
   const server = fastify()
 
   server.register(autoroutes, {
@@ -58,4 +58,5 @@ tap.test('dir does not exists', (t) => {
       t.end()
     }
   )
+})
 })
