@@ -25,12 +25,12 @@ describe('Invalid Routes', () => {
   test('invalid type routes directory', (done) => {
     const server = fastify()
 
-    mock({
-      dirAsFile: {},
+    const dir = mock('dir', {
+      dirAsFile: '',
     })
 
     server.register(autoroutes, {
-      dir: path.join('./', 'dirAsFile'),
+      dir: path.join(dir, 'dirAsFile'),
     })
 
     server.inject(
@@ -48,14 +48,12 @@ describe('Invalid Routes', () => {
   test('empty routes module', (done) => {
     const server = fastify()
 
-    mock({
-      'dir': {
-        'index.js': '', // empty
-      }
+    const dir = mock('dir', {
+      'index.js': '', // empty
     })
 
     server.register(autoroutes, {
-      dir: 'dir',
+      dir,
     })
 
     server.inject(
@@ -73,14 +71,12 @@ describe('Invalid Routes', () => {
   test('modules with error', (done) => {
     const server = fastify()
 
-    mock({
-      dir: {
-        'index.js': exampleErrorModule,
-      }
+    const dir = mock('dir', {
+      'index.js': exampleErrorModule,
     })
 
     server.register(autoroutes, {
-      dir: 'dir',
+      dir,
     })
 
     server.inject(
@@ -98,14 +94,12 @@ describe('Invalid Routes', () => {
   test('modules without valid routes', (done) => {
     const server = fastify()
 
-    mock({
-      dir: {
-        'index.js': exampleInvalidModule,
-      }
+    const dir = mock('dir', {
+      'index.js': exampleInvalidModule,
     })
 
     server.register(autoroutes, {
-      dir: 'dir',
+      dir,
     })
 
     server.inject(

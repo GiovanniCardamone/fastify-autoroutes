@@ -1,11 +1,17 @@
 import mockFs from 'mock-fs'
 import path from 'path'
 
-export function mock (filesystem: { [key: string]: any }) {
-  return mockFs({
-    ...filesystem,
+export function mock(dir: string, filesystem: { [key: string]: any }): string {
+
+
+  mockFs({
+    [dir]: {
+      ...filesystem,
+    },
     'node_modules': mockFs.load(path.resolve(process.cwd(), 'node_modules')),
-  }, { createCwd: false })
+  }, { createCwd: true })
+
+  return path.join(process.cwd(), dir)
 }
 
 export function restore() {
