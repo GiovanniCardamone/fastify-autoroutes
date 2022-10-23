@@ -1,6 +1,6 @@
 {
     "name": "fastify-autoroutes",
-    "version": "2.1.5",
+    "version": "3.0.0",
     "description": "Map directory structure to routes",
     "main": "dist/index.js",
     "prettier": "@giovannicardamone/prettier-config",
