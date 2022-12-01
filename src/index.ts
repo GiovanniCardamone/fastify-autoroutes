@@ -132,7 +132,7 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
     // glob returns ../../, but windows returns ..\..\
     dirPath = path.normalize(dirPath).replace(/\\/g, '/')
 
-    const routes = await glob(`${dirPath}/**/[!._]*[!.test].{ts,js}`)
+    const routes = await glob(`${dirPath}/**/[!._]!(*.test).{ts,js}`)
     const routesModules: Record<string, StrictResource> = {}
 
     // console.log({ routes })
