@@ -378,6 +378,29 @@ describe('Routes', () => {
         )
       }
     )
-  }
-  )
+  })
+
+  test('expect route /status to work', (done) => {
+    const server = fastify()
+
+    const dir = mock('routes', {
+      a: {'status.js': exampleGetRoute, }
+    })
+
+    server.register(autoroutes, {
+      dir
+    })
+
+    server.inject(
+      {
+        method: 'GET',
+        url: '/a/status',
+      },
+      (err, res) => {
+        expect(err).toBe(null)
+        expect(res.payload).toBe('get')
+        done()
+      }
+    )
+  })
 })

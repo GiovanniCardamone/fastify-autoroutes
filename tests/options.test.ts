@@ -30,7 +30,7 @@ describe('Options', () => {
     )
   })
 
-  test('ivalid dir parameters', (done) => {
+  test('invalid dir parameters', (done) => {
     const server = fastify()
 
     // @ts-expect-error not valid 33 as dir
@@ -45,7 +45,7 @@ describe('Options', () => {
       },
       (error, res) => {
         console.log({ error, res })
-        expect(error.constructor.name).toBe('NodeError')
+        expect(error).not.toBe(undefined)
         done()
       }
     )
