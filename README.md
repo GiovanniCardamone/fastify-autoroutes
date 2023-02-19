@@ -40,6 +40,7 @@ const server = fastify()
 
 server.register(require('fastify-autoroutes'), {
   dir: './<autoroutes-directory>', // relative to your cwd
+  prefix: '/api', // optional, don't use if you do not need prefixes
 })
 ```
 
