@@ -380,6 +380,56 @@ describe('Routes', () => {
     )
   })
 
+  
+  test('skip routes ending with .d.ts', (done) => {
+    const server = fastify()
+
+    const dir = mock('dir', {
+      'someTsRoute.d.ts': exampleGetRouteDefaultModule,
+    })
+
+    server.register(autoroutes, {
+      dir
+    })
+
+    server.inject(
+      {
+        method: 'GET',
+        url: '/someTsRoute',
+      },
+      (err, res) => {
+        expect(res.statusCode).toBe(404)
+        done()
+      }
+    )
+  })
+
+  
+  test('skip routes match ignorePattern', (done) => {
+    const server = fastify()
+
+    const ignorePattern = /ignore/
+    const dir = mock('dir', {
+      'someTsRoute.ignore.ts': exampleGetRouteDefaultModule,
+    })
+
+    server.register(autoroutes, {
+      dir,
+      ignorePattern
+    })
+
+    server.inject(
+      {
+        method: 'GET',
+        url: '/someTsRoute',
+      },
+      (err, res) => {
+        expect(res.statusCode).toBe(404)
+        done()
+      }
+    )
+  })
+
   test('expect route /status to work', (done) => {
     const server = fastify()
 
