@@ -89,6 +89,7 @@ export interface StrictResource {
 interface FastifyAutoroutesOptions {
   dir?: string
   prefix?: string
+  ignorePattern?: string | RegExp
 }
 
 export default fastifyPlugin<FastifyAutoroutesOptions>(
@@ -97,10 +98,11 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
     options: FastifyAutoroutesOptions,
     next: CallableFunction
   ) => {
-    const { dir, prefix: routePrefix } = {
+    const { dir, prefix: routePrefix, ignorePattern } = {
       ...options,
       dir: options.dir || './routes',
       prefix: options.prefix || '',
+      ignorePattern: options.ignorePattern || undefined,
     }
 
     let dirPath: string
@@ -132,12 +134,13 @@ export default fastifyPlugin<FastifyAutoroutesOptions>(
     // glob returns ../../, but windows returns ..\..\
     dirPath = path.normalize(dirPath).replace(/\\/g, '/')
 
-    const routes = await glob(`${dirPath}/**/[!._]!(*.test).{ts,js}`)
+    const routes = await glob(`${dirPath}/**/[!._]!(*.test|*.d).{ts,js}`)
     const routesModules: Record<string, StrictResource> = {}
 
     // console.log({ routes })
 
     for (const route of routes) {
+      if (ignorePattern && route.match(ignorePattern)) continue
       let routeName = route
         .replace(dirPath, '')
         .replace('.js', '')
